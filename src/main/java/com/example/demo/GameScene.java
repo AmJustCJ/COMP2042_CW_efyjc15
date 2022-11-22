@@ -1,13 +1,16 @@
 package com.example.demo;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.Random;
 
@@ -175,7 +178,6 @@ class GameScene {
                 cells[i][j].setModify(false);
             }
         }
-
     }
 
     private void moveDown() {
@@ -187,7 +189,6 @@ class GameScene {
                 cells[i][j].setModify(false);
             }
         }
-
     }
 
     private boolean isValidDesH(int i, int j, int des, int sign) {
@@ -204,6 +205,7 @@ class GameScene {
         if (isValidDesH(i, j, des, sign)) {
             cells[i][j].adder(cells[i][des + sign]);
             cells[i][des].setModify(true);
+            score += cells[i][des + sign].getNumber(); //added this
         } else if (des != j) {
             cells[i][j].changeCell(cells[i][des]);
         }
@@ -222,6 +224,7 @@ class GameScene {
         if (isValidDesV(i, j, des, sign)) {
             cells[i][j].adder(cells[des + sign][j]);
             cells[des][j].setModify(true);
+            score += cells[des + sign][j].getNumber(); //added this
         } else if (des != i) {
             cells[i][j].changeCell(cells[des][j]);
         }
@@ -246,14 +249,6 @@ class GameScene {
             }
         }
         return true;
-    }
-
-    private void sumCellNumbersToScore() {
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                score += cells[i][j].getNumber();
-            }
-        }
     }
 
     void game(Scene gameScene, Group root, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
@@ -283,16 +278,25 @@ class GameScene {
         gameScene.addEventHandler(KeyEvent.KEY_PRESSED, key ->{
                 Platform.runLater(() -> {
                     int haveEmptyCell;
-                    if (key.getCode() == KeyCode.DOWN) {
-                        GameScene.this.moveDown();
-                    } else if (key.getCode() == KeyCode.UP) {
-                        GameScene.this.moveUp();
-                    } else if (key.getCode() == KeyCode.LEFT) {
-                        GameScene.this.moveLeft();
-                    } else if (key.getCode() == KeyCode.RIGHT) {
-                        GameScene.this.moveRight();
+                    switch(key.getCode()){
+                        case UP -> GameScene.this.moveUp();
+                        case DOWN -> GameScene.this.moveDown();
+                        case LEFT -> GameScene.this.moveLeft();
+                        case RIGHT -> GameScene.this.moveRight();
+                        default -> {
+                            Alert Error = new Alert(Alert.AlertType.ERROR);
+                            Error.setTitle("Error");
+                            Error.setHeaderText("You can only input arrow key: Left, right, up and down");
+
+                            PauseTransition delay = new PauseTransition(Duration.seconds(3));
+                            delay.setOnFinished(e -> Error.hide());
+                            Error.show();
+                            delay.play();
+
+                            return;
+                        }
                     }
-                    GameScene.this.sumCellNumbersToScore();
+
                     scoreText.setText(score + "");
                     haveEmptyCell = GameScene.this.haveEmptyCell();
                     if (haveEmptyCell == -1) {
@@ -304,7 +308,8 @@ class GameScene {
                             score = 0;
                         }
                     } else if(haveEmptyCell == 1)
-                        GameScene.this.randomFillNumber(2);
+                            GameScene.this.randomFillNumber(2);
+
                 });
             });
     }

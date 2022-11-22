@@ -43,18 +43,19 @@ public class EndGame {
         quitButton.setPrefSize(100,30);
         quitButton.setTextFill(Color.PINK);
         root.getChildren().add(quitButton);
-        quitButton.relocate(100,800);
+        quitButton.relocate(100,700);
         quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Quit Dialog");
                 alert.setHeaderText("Quit from this page");
-                alert.setContentText("Are you sure?");
+                alert.setContentText("Are you sure?????");
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
                     root.getChildren().clear();
+                    primaryStage.close(); //added this
                 }
             }
         });
