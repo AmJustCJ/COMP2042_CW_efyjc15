@@ -27,8 +27,8 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField layoutX="283.0" layoutY="21.0" promptText="Enter Username" style="-fx-border-color: #0598ff;" />
             <Button fx:id="PlayButton" layoutX="273.0" layoutY="135.0" mnemonicParsing="false" onAction="#Play" text="Play" />
+            <TextField fx:id="TextInput" layoutX="275.0" layoutY="10.0" prefHeight="54.0" prefWidth="278.0" />
          </children>
       </AnchorPane>
    </bottom>

@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -24,7 +25,10 @@ public class Controller extends Main {
     @FXML
     private Button PlayButton;
     @FXML
+    private TextField TextInput;
+    @FXML
     private BorderPane startScene;
+
     static final int WIDTH = 900;
     static final int HEIGHT = 800;
     private Group gameRoot = new Group();
@@ -38,8 +42,13 @@ public class Controller extends Main {
     public void setGameRoot(Group gameRoot) {
         this.gameRoot = gameRoot;
     }
+
+    String username;
     @FXML
-    public void Play(ActionEvent event) throws IOException {
+    public void Play(ActionEvent event) {
+        String username = TextInput.getText();
+        if(!username.isEmpty()){
+            System.out.println(username);
             Stage startStage = (Stage) startScene.getScene().getWindow();
             startStage.close();
 
@@ -57,7 +66,6 @@ public class Controller extends Main {
             Scene rankScene = new Scene(rankRoot, WIDTH, HEIGHT, Color.rgb(250, 50, 120, 0.3));
             BackgroundFill background_fill = new BackgroundFill(Color.rgb(120, 100, 100), CornerRadii.EMPTY, Insets.EMPTY);
             Background background = new Background(background_fill);
-
 
             Rectangle backgroundOfMenu = new Rectangle(240, 120, Color.rgb(120, 120, 120, 0.2));
             backgroundOfMenu.setX(WIDTH / 2 - 120);
@@ -78,6 +86,9 @@ public class Controller extends Main {
             game.game(gameScene, gameRoot, primaryStage, endGameScene, endgameRoot);
 
             primaryStage.show();
-
+        }
+        else{
+            System.out.println("please enter username");
+        }
     }
 }
