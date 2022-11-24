@@ -6,22 +6,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="startScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller">
    <top>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="26.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2048 Game COMP2042 Version" wrappingWidth="577.0972061157227">
+               <font>
+                  <Font name="Cambria" size="42.0" />
+               </font>
+            </Text>
+         </children></AnchorPane>
    </top>
    <bottom>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="133.0" layoutY="24.0" prefHeight="46.0" prefWidth="157.0" text="Username: ">
+            <Label layoutX="125.0" layoutY="11.0" prefHeight="46.0" prefWidth="157.0" text="Username: ">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <TextField layoutX="283.0" layoutY="34.0" promptText="Enter Username" style="-fx-border-color: #0598ff;" />
-            <Button fx:id="testing" layoutX="273.0" layoutY="135.0" mnemonicParsing="false" onAction="#dfsf" text="Play" />
+            <TextField layoutX="283.0" layoutY="21.0" promptText="Enter Username" style="-fx-border-color: #0598ff;" />
+            <Button fx:id="PlayButton" layoutX="273.0" layoutY="135.0" mnemonicParsing="false" onAction="#Play" text="Play" />
          </children>
       </AnchorPane>
    </bottom>
