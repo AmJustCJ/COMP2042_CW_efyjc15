@@ -2,7 +2,9 @@ package com.example.demo;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
@@ -12,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.util.Random;
 
 class GameScene {
@@ -70,7 +73,7 @@ class GameScene {
             xCell = random.nextInt(aForBound+1);
             yCell = random.nextInt(bForBound+1);
         if (putTwo) {
-            text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+            text = textMaker.madeText("1024", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(2);
@@ -307,8 +310,19 @@ class GameScene {
                             root.getChildren().clear();
                             score = 0;
                         }
-                    } else if(haveEmptyCell == 1)
-                            GameScene.this.randomFillNumber(2);
+                    } else if(haveEmptyCell == 1) {
+                        GameScene.this.randomFillNumber(2);
+                    } else if (haveEmptyCell == 0) {
+                        Parent WinRoot = null;
+                        try {
+                            WinRoot = FXMLLoader.load(getClass().getResource("EndgameWin.fxml"));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Scene WinScene = new Scene(WinRoot);
+                        primaryStage.setScene(WinScene);
+                        primaryStage.show();
+                    }
 
                 });
             });
