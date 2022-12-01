@@ -12,10 +12,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.util.Optional;
 
 
 public class EndGame {
+    Controller controllerObj = new Controller();
+    Account accObj = new Account();
     private static EndGame singleInstance = null;
     private EndGame(){
 
@@ -44,6 +47,10 @@ public class EndGame {
         quitButton.setTextFill(Color.PINK);
         root.getChildren().add(quitButton);
         quitButton.relocate(100,700);
+
+        accObj.writeFile(controllerObj.getUsername(), score);
+        accObj.readFile();
+
         quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

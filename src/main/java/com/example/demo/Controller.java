@@ -2,18 +2,16 @@ package com.example.demo;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -21,7 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Controller extends Main {
@@ -37,7 +35,20 @@ public class Controller extends Main {
     private Button QuitGame;
     @FXML
     private BorderPane WinScene;
-
+    @FXML
+    private Button SelectBackgroundButton;
+    @FXML
+    private Button BackgroundBack;
+    @FXML
+    private AnchorPane SelectBackgroundScene;
+    @FXML
+    private ImageView BackgroundImage;
+    @FXML
+    private Button ImageOne;
+    @FXML
+    private Button ImageThree;
+    @FXML
+    private Button ImageTwo;
 
 
     static final int WIDTH = 900;
@@ -54,11 +65,18 @@ public class Controller extends Main {
         this.gameRoot = gameRoot;
     }
 
-    String username;
+
+    Image BackgroundImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("confuse nick young.jpg")));
+    Image BackgroundImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("joji2.jpg")));
+    Image BackgroundImage3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("backgroundMain.jpeg")));
+
+    public static String username;
+
     @FXML
     public void Play(ActionEvent event) {
-        String username = TextInput.getText();
+        username = TextInput.getText();
         if(!username.isEmpty()){
+
             System.out.println(username);
             Stage startStage = (Stage) startScene.getScene().getWindow();
             startStage.close();
@@ -135,5 +153,49 @@ public class Controller extends Main {
             RetryStage.show(); //show the beginning scene, i.e. the login scene
             WinStage.close(); //close the win scene
         }
+    }
+
+    @FXML
+    void SelectBackground(ActionEvent event) throws IOException {
+        Stage selectBackgroundStage = new Stage();
+        Parent StartRoot = FXMLLoader.load(getClass().getResource("SelectBackground.fxml"));
+        Scene StartScene = new Scene(StartRoot);
+        selectBackgroundStage.setScene(StartScene);
+        selectBackgroundStage.show();
+
+        Stage StartStage = (Stage) startScene.getScene().getWindow(); //get the GUI of this select background scene
+        StartStage.close(); //close the win scene
+    }
+    @FXML
+    void backToMain(ActionEvent event) throws IOException {
+        Parent StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml")); //load new stage with sample.fxml
+        //so that player can go back to the main page
+        Stage MainStage = new Stage(); //create new stage
+        Scene StartScene = new Scene(StartRoot);
+        MainStage.setScene(StartScene);
+        MainStage.show(); //show the beginning scene, i.e. the login scene
+
+        //now close select background scene
+        Stage SelectBackgroundStage = (Stage) SelectBackgroundScene.getScene().getWindow(); //get the GUI of this select background scene
+        SelectBackgroundStage.close(); //close the win scene
+    }
+
+    @FXML
+    void SwitchImageToOne(ActionEvent event) {
+        BackgroundImage.setImage(BackgroundImage1);
+    }
+
+    @FXML
+    void SwitchImageToTwo(ActionEvent event) {
+        BackgroundImage.setImage(BackgroundImage2);
+    }
+
+    @FXML
+    void SwitchImageToThree(ActionEvent event) {
+        BackgroundImage.setImage(BackgroundImage3);
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

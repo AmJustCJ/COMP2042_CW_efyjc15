@@ -3,33 +3,39 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="startScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller">
-   <top>
+   <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
+            <ImageView fx:id="BackgroundImage" fitHeight="358.0" fitWidth="607.0" pickOnBounds="true" preserveRatio="true" scaleX="1.3" scaleY="1.4">
+               <image>
+                  <Image url="@backgroundMain.jpeg" />
+               </image>
+            </ImageView>
             <Text layoutX="26.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2048 Game COMP2042 Version" wrappingWidth="577.0972061157227">
                <font>
                   <Font name="Cambria" size="42.0" />
                </font>
             </Text>
-         </children></AnchorPane>
-   </top>
-   <bottom>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label layoutX="125.0" layoutY="11.0" prefHeight="46.0" prefWidth="157.0" text="Username: ">
+            <Label layoutX="114.0" layoutY="167.0" prefHeight="46.0" prefWidth="157.0" text="Username: ">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button fx:id="PlayButton" layoutX="273.0" layoutY="135.0" mnemonicParsing="false" onAction="#Play" text="Play" />
-            <TextField fx:id="TextInput" layoutX="275.0" layoutY="10.0" prefHeight="54.0" prefWidth="278.0" />
-         </children>
-      </AnchorPane>
-   </bottom>
+            <Button fx:id="SelectBackgroundButton" layoutX="224.0" layoutY="281.0" mnemonicParsing="false" onAction="#SelectBackground" prefHeight="45.0" prefWidth="143.0" text="Select background">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="PlayButton" layoutX="240.0" layoutY="239.0" mnemonicParsing="false" onAction="#Play" prefHeight="30.0" prefWidth="97.0" text="Play" />
+            <TextField fx:id="TextInput" layoutX="258.0" layoutY="163.0" prefHeight="54.0" prefWidth="278.0" />
+         </children></AnchorPane>
+   </center>
 </BorderPane>

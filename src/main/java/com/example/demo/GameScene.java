@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.Random;
 
 class GameScene {
@@ -26,6 +26,8 @@ class GameScene {
     private Cell[][] cells = new Cell[n][n];
     private Group root;
     private long score = 0;
+
+    Controller controllerObj = new Controller();
 
     static void setN(int number) {
         n = number;
@@ -73,7 +75,7 @@ class GameScene {
             xCell = random.nextInt(aForBound+1);
             yCell = random.nextInt(bForBound+1);
         if (putTwo) {
-            text = textMaker.madeText("1024", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+            text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(2);
@@ -261,7 +263,6 @@ class GameScene {
                 cells[i][j] = new Cell((j) * LENGTH + (j + 1) * distanceBetweenCells,
                         (i) * LENGTH + (i + 1) * distanceBetweenCells, LENGTH, root);
             }
-
         }
 
         Text text = new Text();
@@ -322,8 +323,27 @@ class GameScene {
                         Scene WinScene = new Scene(WinRoot);
                         primaryStage.setScene(WinScene);
                         primaryStage.show();
+                        File myFile = new File("scoreBoard.txt"); //file methods
+                        try { //to write username and score to scoreBoard.txt
+                            BufferedWriter bw = new BufferedWriter(new FileWriter(myFile, true));
+                            bw.write(controllerObj.getUsername() + " " + score + "\n");
+                            bw.close();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        try { //to read username and score from scoreBoard.txt
+                            BufferedReader br = new BufferedReader(new FileReader(myFile));
+                            String line = br.readLine();
+                            while (line != null){
+                                System.out.println(line);
+                                line = br.readLine();
+                            }
+                            br.close();
+                        }
+                        catch   (IOException e){
+                            throw  new RuntimeException(e);
+                        }
                     }
-
                 });
             });
     }
