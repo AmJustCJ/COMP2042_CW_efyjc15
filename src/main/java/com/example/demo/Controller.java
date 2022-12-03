@@ -75,7 +75,7 @@ public class Controller extends Main {
     @FXML
     public void Play(ActionEvent event) {
         username = TextInput.getText();
-        if(!username.isEmpty()){
+        if(!username.isEmpty() && !username.contains(" ")){
 
             System.out.println(username);
             Stage startStage = (Stage) startScene.getScene().getWindow();

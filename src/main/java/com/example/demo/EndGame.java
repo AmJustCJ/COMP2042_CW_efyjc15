@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class EndGame {
     Controller controllerObj = new Controller();
-    Account accObj = new Account();
+    AccountList accListObj = new AccountList();
     private static EndGame singleInstance = null;
     private EndGame(){
 
@@ -48,8 +48,8 @@ public class EndGame {
         root.getChildren().add(quitButton);
         quitButton.relocate(100,700);
 
-        accObj.writeFile(controllerObj.getUsername(), score);
-        accObj.readFile();
+        accListObj.writeFile(controllerObj.getUsername(), (int)score);
+        accListObj.readFile();
 
         quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
