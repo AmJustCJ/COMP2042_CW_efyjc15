@@ -1,7 +1,7 @@
 package com.example.demo;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -11,18 +11,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class Controller extends Main {
+public class Controller extends Main implements Initializable{
     @FXML
     private Button PlayButton;
     @FXML
@@ -42,13 +42,27 @@ public class Controller extends Main {
     @FXML
     private AnchorPane SelectBackgroundScene;
     @FXML
-    private ImageView BackgroundImage;
+    public ImageView BackgroundImage;
     @FXML
     private Button ImageOne;
     @FXML
     private Button ImageThree;
     @FXML
-    private Button ImageTwo;
+    private Button ImageTwo;@FXML
+    private TableView<Account> table;
+    @FXML
+    private TableColumn<Account, String> usernameColumn;
+    @FXML
+    private TableColumn<Account, Integer> scoreColumn;
+    @FXML
+    private Button leaderBoardBack;
+    @FXML
+    private AnchorPane leaderBoardScene;
+    @FXML
+    private ChoiceBox<String> modeChoiceBox;
+    private String[] gameModeChoice = {"Normal", "Multiplier", "Drunk"};
+    public static Image temp1;
+
 
 
     static final int WIDTH = 900;
@@ -65,6 +79,12 @@ public class Controller extends Main {
         this.gameRoot = gameRoot;
     }
 
+    public Image getBgImg(){
+        return temp1;
+    }
+    public void setBgImg(Image img){
+        temp1 = img;
+    }
 
     Image BackgroundImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("confuse nick young.jpg")));
     Image BackgroundImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("joji2.jpg")));
@@ -136,10 +156,10 @@ public class Controller extends Main {
     }
 
     @FXML
-    void Replay(ActionEvent event) throws IOException {
-        Stage RetryStage = new Stage(); //create new stage
-        Parent StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml")); //load new stage with sample.fxml
-        //so that player can retry the game
+    void Replay(ActionEvent event) throws Exception {
+//        Stage RetryStage = new Stage(); //create new stage
+//        Parent StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml")); //load new stage with sample.fxml
+//        //so that player can retry the game
         Stage WinStage = (Stage) WinScene.getScene().getWindow(); //get the GUI of this win scene
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -148,9 +168,12 @@ public class Controller extends Main {
         alert.setContentText("Are you sure?????");
 
         if (alert.showAndWait().get() == ButtonType.OK){
-            Scene StartScene = new Scene(StartRoot);
-            RetryStage.setScene(StartScene);
-            RetryStage.show(); //show the beginning scene, i.e. the login scene
+            Main mainObj = new Main();
+            Stage primaryStage = new Stage();
+            mainObj.start(primaryStage);
+//            Scene StartScene = new Scene(StartRoot);
+//            RetryStage.setScene(StartScene);
+//            RetryStage.show(); //show the beginning scene, i.e. the login scene
             WinStage.close(); //close the win scene
         }
     }
@@ -163,8 +186,8 @@ public class Controller extends Main {
         selectBackgroundStage.setScene(StartScene);
         selectBackgroundStage.show();
 
-        Stage StartStage = (Stage) startScene.getScene().getWindow(); //get the GUI of this select background scene
-        StartStage.close(); //close the win scene
+        Stage StartStage = (Stage) startScene.getScene().getWindow(); //get the GUI of main starting scene
+        StartStage.close(); //close the main starting scene
     }
     @FXML
     void backToMain(ActionEvent event) throws IOException {
@@ -177,25 +200,48 @@ public class Controller extends Main {
 
         //now close select background scene
         Stage SelectBackgroundStage = (Stage) SelectBackgroundScene.getScene().getWindow(); //get the GUI of this select background scene
-        SelectBackgroundStage.close(); //close the win scene
+        SelectBackgroundStage.close(); //close the select background scene
     }
 
     @FXML
     void SwitchImageToOne(ActionEvent event) {
         BackgroundImage.setImage(BackgroundImage1);
+        setBgImg(BackgroundImage1);
     }
 
     @FXML
     void SwitchImageToTwo(ActionEvent event) {
         BackgroundImage.setImage(BackgroundImage2);
+        setBgImg(BackgroundImage2);
     }
 
     @FXML
     void SwitchImageToThree(ActionEvent event) {
         BackgroundImage.setImage(BackgroundImage3);
+        setBgImg(BackgroundImage3);
+    }
+    @FXML
+    void showLeaderBoard(ActionEvent event) throws IOException {
+        Stage showLeaderBoardStage = new Stage();
+        Parent leaderBoardRoot = FXMLLoader.load(getClass().getResource("LeaderBoard.fxml"));
+        Scene showLeaderBoardScene = new Scene(leaderBoardRoot);
+        showLeaderBoardStage.setScene(showLeaderBoardScene);
+        showLeaderBoardStage.show();
+
+        Stage StartStage = (Stage) startScene.getScene().getWindow(); //get the GUI of main starting scene
+        StartStage.close(); //close the main starting scene
     }
 
     public String getUsername() {
         return username;
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (modeChoiceBox!= null){
+            modeChoiceBox.getItems().addAll(gameModeChoice);
+        }
+
     }
 }

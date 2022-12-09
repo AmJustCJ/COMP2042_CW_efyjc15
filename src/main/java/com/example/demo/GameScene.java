@@ -75,7 +75,7 @@ class GameScene {
             xCell = random.nextInt(aForBound+1);
             yCell = random.nextInt(bForBound+1);
         if (putTwo) {
-            text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+            text = textMaker.madeText("1024", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(2);
@@ -92,7 +92,7 @@ class GameScene {
             for (int j = 0; j < n; j++) {
                 if (cells[i][j].getNumber() == 0)
                     return 1;
-                if(cells[i][j].getNumber() == 2048)
+                else if(cells[i][j].getNumber() == 2048)
                     return 0;
             }
         }
@@ -209,7 +209,7 @@ class GameScene {
     private void moveHorizontally(int i, int j, int des, int sign) {
         if (isValidDesH(i, j, des, sign)) {
             cells[i][j].adder(cells[i][des + sign]);
-            cells[i][des].setModify(true);
+            cells[i][des + sign].setModify(true);
             score += cells[i][des + sign].getNumber(); //added this
         } else if (des != j) {
             cells[i][j].changeCell(cells[i][des]);
@@ -228,7 +228,7 @@ class GameScene {
     private void moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
             cells[i][j].adder(cells[des + sign][j]);
-            cells[des][j].setModify(true);
+            cells[des + sign][j].setModify(true);
             score += cells[des + sign][j].getNumber(); //added this
         } else if (des != i) {
             cells[i][j].changeCell(cells[des][j]);
@@ -303,6 +303,23 @@ class GameScene {
 
                     scoreText.setText(score + "");
                     haveEmptyCell = GameScene.this.haveEmptyCell();
+                    for(int i=0; i<n; i++){
+                        for(int j=0; j<n; j++){
+                            if(cells[i][j].getNumber() == 2048){
+                                AccountList accListObj = new AccountList();
+                                accListObj.writeFile(controllerObj.getUsername(), (int)score);
+                                Parent WinRoot = null;
+                                try {
+                                    WinRoot = FXMLLoader.load(getClass().getResource("EndgameWin.fxml"));
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                Scene WinScene = new Scene(WinRoot);
+                                primaryStage.setScene(WinScene);
+                                primaryStage.show();
+                            }
+                        }
+                    }
                     if (haveEmptyCell == -1) {
                         if (GameScene.this.canNotMove()) {
                             primaryStage.setScene(endGameScene);
@@ -313,36 +330,6 @@ class GameScene {
                         }
                     } else if(haveEmptyCell == 1) {
                         GameScene.this.randomFillNumber(2);
-                    } else if (haveEmptyCell == 0) {
-                        Parent WinRoot = null;
-                        try {
-                            WinRoot = FXMLLoader.load(getClass().getResource("EndgameWin.fxml"));
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        Scene WinScene = new Scene(WinRoot);
-                        primaryStage.setScene(WinScene);
-                        primaryStage.show();
-                        File myFile = new File("scoreBoard.txt"); //file methods
-                        try { //to write username and score to scoreBoard.txt
-                            BufferedWriter bw = new BufferedWriter(new FileWriter(myFile, true));
-                            bw.write(controllerObj.getUsername() + " " + score + "\n");
-                            bw.close();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        try { //to read username and score from scoreBoard.txt
-                            BufferedReader br = new BufferedReader(new FileReader(myFile));
-                            String line = br.readLine();
-                            while (line != null){
-                                System.out.println(line);
-                                line = br.readLine();
-                            }
-                            br.close();
-                        }
-                        catch   (IOException e){
-                            throw  new RuntimeException(e);
-                        }
                     }
                 });
             });

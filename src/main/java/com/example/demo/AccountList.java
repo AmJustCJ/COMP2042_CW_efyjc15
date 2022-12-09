@@ -18,7 +18,7 @@ public class AccountList {
         }
     }
 
-    public void readFile(){
+    public ArrayList<Account> readFile(){
         try{
             BufferedReader br = new BufferedReader(new FileReader(myFile));
             String line = br.readLine();
@@ -41,7 +41,7 @@ public class AccountList {
                     }
                 }
             }
-
+            return accountList;
         }
         catch(IOException e){
             throw  new RuntimeException(e);

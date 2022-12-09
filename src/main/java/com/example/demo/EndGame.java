@@ -49,7 +49,6 @@ public class EndGame {
         quitButton.relocate(100,700);
 
         accListObj.writeFile(controllerObj.getUsername(), (int)score);
-        accListObj.readFile();
 
         quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
