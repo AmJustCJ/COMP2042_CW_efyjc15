@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Control;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
@@ -15,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.*;
+import java.util.Objects;
 import java.util.Random;
 
 class GameScene {
@@ -27,6 +29,7 @@ class GameScene {
     private Group root;
     private long score = 0;
 
+    String GameModeChoiceString = Controller.GameModeChoiceString;
     Controller controllerObj = new Controller();
 
     static void setN(int number) {
@@ -75,7 +78,7 @@ class GameScene {
             xCell = random.nextInt(aForBound+1);
             yCell = random.nextInt(bForBound+1);
         if (putTwo) {
-            text = textMaker.madeText("1024", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+            text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(2);
@@ -153,47 +156,95 @@ class GameScene {
     }
 
     private void moveLeft() {
-        for (int i = 0; i < n; i++) {
-            for (int j = 1; j < n; j++) {
-                moveHorizontally(i, j, passDestination(i, j, 'l'), -1);
+        if(Objects.equals(GameModeChoiceString, "Drunk")){
+            for (int i = 0; i < n; i++) {
+                for (int j = n - 1; j >= 0; j--) {
+                    moveHorizontally(i, j, passDestination(i, j, 'r'), 1);
+                }
+                for (int j = 0; j < n; j++) {
+                    cells[i][j].setModify(false);
+                }
             }
-            for (int j = 0; j < n; j++) {
-                cells[i][j].setModify(false);
+        } //move right
+        else{
+            for (int i = 0; i < n; i++) {
+                for (int j = 1; j < n; j++) {
+                    moveHorizontally(i, j, passDestination(i, j, 'l'), -1);
+                }
+                for (int j = 0; j < n; j++) {
+                    cells[i][j].setModify(false);
+                }
             }
-        }
+        } // move left
     }
 
     private void moveRight() {
-        for (int i = 0; i < n; i++) {
-            for (int j = n - 1; j >= 0; j--) {
-                moveHorizontally(i, j, passDestination(i, j, 'r'), 1);
+        if(Objects.equals(GameModeChoiceString, "Drunk")){
+            for (int i = 0; i < n; i++) {
+                for (int j = 1; j < n; j++) {
+                    moveHorizontally(i, j, passDestination(i, j, 'l'), -1);
+                }
+                for (int j = 0; j < n; j++) {
+                    cells[i][j].setModify(false);
+                }
             }
-            for (int j = 0; j < n; j++) {
-                cells[i][j].setModify(false);
+        }// move left
+        else{
+            for (int i = 0; i < n; i++) {
+                for (int j = n - 1; j >= 0; j--) {
+                    moveHorizontally(i, j, passDestination(i, j, 'r'), 1);
+                }
+                for (int j = 0; j < n; j++) {
+                    cells[i][j].setModify(false);
+                }
             }
-        }
+        } // move right
     }
 
     private void moveUp() {
-        for (int j = 0; j < n; j++) {
-            for (int i = 1; i < n; i++) {
-                moveVertically(i, j, passDestination(i, j, 'u'), -1);
+        if(Objects.equals(GameModeChoiceString, "Drunk")){
+            for (int j = 0; j < n; j++) {
+                for (int i = n - 1; i >= 0; i--) {
+                    moveVertically(i, j, passDestination(i, j, 'd'), 1);
+                }
+                for (int i = 0; i < n; i++) {
+                    cells[i][j].setModify(false);
+                }
             }
-            for (int i = 0; i < n; i++) {
-                cells[i][j].setModify(false);
+        } //move down
+        else{
+            for (int j = 0; j < n; j++) {
+                for (int i = 1; i < n; i++) {
+                    moveVertically(i, j, passDestination(i, j, 'u'), -1);
+                }
+                for (int i = 0; i < n; i++) {
+                    cells[i][j].setModify(false);
+                }
             }
-        }
+        } //move up
     }
 
     private void moveDown() {
-        for (int j = 0; j < n; j++) {
-            for (int i = n - 1; i >= 0; i--) {
-                moveVertically(i, j, passDestination(i, j, 'd'), 1);
+        if(Objects.equals(GameModeChoiceString, "Drunk")){
+            for (int j = 0; j < n; j++) {
+                for (int i = 1; i < n; i++) {
+                    moveVertically(i, j, passDestination(i, j, 'u'), -1);
+                }
+                for (int i = 0; i < n; i++) {
+                    cells[i][j].setModify(false);
+                }
             }
-            for (int i = 0; i < n; i++) {
-                cells[i][j].setModify(false);
+        } //if game mode is "drunk", move down will become move up
+        else{
+            for (int j = 0; j < n; j++) {
+                for (int i = n - 1; i >= 0; i--) {
+                    moveVertically(i, j, passDestination(i, j, 'd'), 1);
+                }
+                for (int i = 0; i < n; i++) {
+                    cells[i][j].setModify(false);
+                }
             }
-        }
+        }// if game mode is "normal" or "mult", move down still move down
     }
 
     private boolean isValidDesH(int i, int j, int des, int sign) {
@@ -208,7 +259,12 @@ class GameScene {
 
     private void moveHorizontally(int i, int j, int des, int sign) {
         if (isValidDesH(i, j, des, sign)) {
-            cells[i][j].adder(cells[i][des + sign]);
+            if(Objects.equals(GameModeChoiceString, "Multiplier")){
+                cells[i][j].Multiplier(cells[i][des + sign]);
+            }
+            else{
+                cells[i][j].adder(cells[i][des + sign]);
+            }
             cells[i][des + sign].setModify(true);
             score += cells[i][des + sign].getNumber(); //added this
         } else if (des != j) {
@@ -227,7 +283,12 @@ class GameScene {
 
     private void moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
-            cells[i][j].adder(cells[des + sign][j]);
+            if (Objects.equals(GameModeChoiceString, "Multiplier")) {
+                cells[i][j].Multiplier(cells[des + sign][j]);
+            }
+            else{
+                cells[i][j].adder(cells[des + sign][j]);
+            }
             cells[des + sign][j].setModify(true);
             score += cells[des + sign][j].getNumber(); //added this
         } else if (des != i) {

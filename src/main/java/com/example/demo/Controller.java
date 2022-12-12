@@ -36,19 +36,8 @@ public class Controller extends Main implements Initializable{
     @FXML
     private BorderPane WinScene;
     @FXML
-    private Button SelectBackgroundButton;
-    @FXML
-    private Button BackgroundBack;
-    @FXML
-    private AnchorPane SelectBackgroundScene;
-    @FXML
     public ImageView BackgroundImage;
     @FXML
-    private Button ImageOne;
-    @FXML
-    private Button ImageThree;
-    @FXML
-    private Button ImageTwo;@FXML
     private TableView<Account> table;
     @FXML
     private TableColumn<Account, String> usernameColumn;
@@ -61,9 +50,6 @@ public class Controller extends Main implements Initializable{
     @FXML
     private ChoiceBox<String> modeChoiceBox;
     private String[] gameModeChoice = {"Normal", "Multiplier", "Drunk"};
-    public static Image temp1;
-
-
 
     static final int WIDTH = 900;
     static final int HEIGHT = 800;
@@ -79,24 +65,15 @@ public class Controller extends Main implements Initializable{
         this.gameRoot = gameRoot;
     }
 
-    public Image getBgImg(){
-        return temp1;
-    }
-    public void setBgImg(Image img){
-        temp1 = img;
-    }
-
-    Image BackgroundImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("confuse nick young.jpg")));
-    Image BackgroundImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("joji2.jpg")));
-    Image BackgroundImage3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("backgroundMain.jpeg")));
-
     public static String username;
+
+    public static String GameModeChoiceString;
 
     @FXML
     public void Play(ActionEvent event) {
         username = TextInput.getText();
-        if(!username.isEmpty() && !username.contains(" ")){
-
+        if(!username.isEmpty() && !username.contains(" ") && GameModeChoiceString != null){
+            System.out.println(GameModeChoiceString);
             System.out.println(username);
             Stage startStage = (Stage) startScene.getScene().getWindow();
             startStage.close();
@@ -189,37 +166,7 @@ public class Controller extends Main implements Initializable{
         Stage StartStage = (Stage) startScene.getScene().getWindow(); //get the GUI of main starting scene
         StartStage.close(); //close the main starting scene
     }
-    @FXML
-    void backToMain(ActionEvent event) throws IOException {
-        Parent StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml")); //load new stage with sample.fxml
-        //so that player can go back to the main page
-        Stage MainStage = new Stage(); //create new stage
-        Scene StartScene = new Scene(StartRoot);
-        MainStage.setScene(StartScene);
-        MainStage.show(); //show the beginning scene, i.e. the login scene
 
-        //now close select background scene
-        Stage SelectBackgroundStage = (Stage) SelectBackgroundScene.getScene().getWindow(); //get the GUI of this select background scene
-        SelectBackgroundStage.close(); //close the select background scene
-    }
-
-    @FXML
-    void SwitchImageToOne(ActionEvent event) {
-        BackgroundImage.setImage(BackgroundImage1);
-        setBgImg(BackgroundImage1);
-    }
-
-    @FXML
-    void SwitchImageToTwo(ActionEvent event) {
-        BackgroundImage.setImage(BackgroundImage2);
-        setBgImg(BackgroundImage2);
-    }
-
-    @FXML
-    void SwitchImageToThree(ActionEvent event) {
-        BackgroundImage.setImage(BackgroundImage3);
-        setBgImg(BackgroundImage3);
-    }
     @FXML
     void showLeaderBoard(ActionEvent event) throws IOException {
         Stage showLeaderBoardStage = new Stage();
@@ -236,12 +183,16 @@ public class Controller extends Main implements Initializable{
         return username;
     }
 
+    public void gameMode(ActionEvent event){
+        GameModeChoiceString = modeChoiceBox.getValue();
+//        System.out.println(GameModeChoiceString);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (modeChoiceBox!= null){
+        if(modeChoiceBox != null){
             modeChoiceBox.getItems().addAll(gameModeChoice);
+            modeChoiceBox.setOnAction(this::gameMode);
         }
-
     }
 }

@@ -59,6 +59,14 @@ public class Cell {
         setColorByNumber(getNumber());
     }
 
+    void Multiplier(Cell cell) {
+        cell.getTextClass().setText((cell.getNumber() * this.getNumber()) + "");
+        textClass.setText("0");
+        root.getChildren().remove(textClass);
+        cell.setColorByNumber(cell.getNumber());
+        setColorByNumber(getNumber());
+    }
+
     void setColorByNumber(int number) {
         switch (number) {
             case 0:
@@ -96,7 +104,21 @@ public class Cell {
                 break;
             case 2048:
                 rectangle.setFill(Color.rgb(250,0,0,1));
-
+                break;
+            case 4096:
+                rectangle.setFill(Color.rgb(250,0,229,1));
+                break;
+            case 8192:
+                rectangle.setFill(Color.rgb(250,50,229,1));
+                break;
+            case 16384:
+                rectangle.setFill(Color.rgb(237,50,250,1));
+                break;
+            case 32768:
+                rectangle.setFill(Color.rgb(220,50,250,1));
+                break;
+            case 65536:
+                rectangle.setFill(Color.rgb(70,50,250,1));
 
         }
 

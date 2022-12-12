@@ -32,7 +32,7 @@ public class Main extends Application implements Initializable {
     static final int HEIGHT = 800;
     private Group gameRoot = new Group();
     private Scene gameScene = new Scene(gameRoot, WIDTH, HEIGHT, Color.rgb(189, 177, 92));
-    private static Scanner input= new Scanner(System.in);
+//    private static Scanner input= new Scanner(System.in);
 
     public void setGameScene(Scene gameScene) {
         this.gameScene = gameScene;
@@ -66,8 +66,8 @@ public class Main extends Application implements Initializable {
         /*if (backgroundImage == null){
             back
         }*/
-        Controller controllerObj = new Controller();
-        Image temp1 = controllerObj.getBgImg();
+        SelectBg selectBgObj = new SelectBg();
+        Image temp1 = selectBgObj.getBgImg();
         if (temp1 != null){
             BackgroundImage.setImage(temp1);
             System.out.println("Not null" + temp1);
