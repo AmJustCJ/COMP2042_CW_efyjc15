@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class AccountList {
     ArrayList<Account> accountList = new ArrayList<>();
     File myFile = new File("leaderBoard.txt");
+    File myFileMult = new File("multLeaderBoard.txt");
 
     public void writeFile(String username, int score){
         try {
