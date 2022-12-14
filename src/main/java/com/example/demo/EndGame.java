@@ -12,7 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -20,6 +20,7 @@ public class EndGame {
     Controller controllerObj = new Controller();
     AccountList accListObj = new AccountList();
     private static EndGame singleInstance = null;
+    String GameModeChoiceString = Controller.GameModeChoiceString;
     private EndGame(){
 
     }
@@ -48,7 +49,12 @@ public class EndGame {
         root.getChildren().add(quitButton);
         quitButton.relocate(100,700);
 
-        accListObj.writeFile(controllerObj.getUsername(), (int)score);
+        if(Objects.equals(GameModeChoiceString, "Multiplier")){
+            accListObj.writeFileMult(controllerObj.getUsername(), (int)score);
+        }
+        else{
+            accListObj.writeFile(controllerObj.getUsername(), (int)score);
+        }
 
         quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

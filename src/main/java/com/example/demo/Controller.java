@@ -1,5 +1,9 @@
 package com.example.demo;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,20 +19,25 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class Controller extends Main implements Initializable{
     @FXML
-    private Button PlayButton;
+    private Button PlayButton; //at sample
     @FXML
-    private TextField TextInput;
+    private TextField TextInput; //at sample
     @FXML
-    private BorderPane startScene;
+    private BorderPane startScene; //at sample
     @FXML
     private Button PlayAgain;
     @FXML
@@ -36,7 +45,7 @@ public class Controller extends Main implements Initializable{
     @FXML
     private BorderPane WinScene;
     @FXML
-    public ImageView BackgroundImage;
+    public ImageView BackgroundImage; //at sample
     @FXML
     private TableView<Account> table;
     @FXML
@@ -48,8 +57,18 @@ public class Controller extends Main implements Initializable{
     @FXML
     private AnchorPane leaderBoardScene;
     @FXML
-    private ChoiceBox<String> modeChoiceBox;
+    private ChoiceBox<String> modeChoiceBox; //at sample
     private String[] gameModeChoice = {"Normal", "Multiplier", "Drunk"};
+    @FXML
+    private Slider volumeSlider;
+    private File directory;
+    private File[] files;
+    private ArrayList<File> songs;
+    private int songNumber;
+    private Media media;
+    private MediaPlayer mediaPlayer;
+
+
 
     static final int WIDTH = 900;
     static final int HEIGHT = 800;
@@ -194,5 +213,35 @@ public class Controller extends Main implements Initializable{
             modeChoiceBox.getItems().addAll(gameModeChoice);
             modeChoiceBox.setOnAction(this::gameMode);
         }
+//        songs = new ArrayList<File>();
+//        directory = new File("music");
+//        files = directory.listFiles();
+//        if(files != null){
+//            for(File file : files){
+//                songs.add(file);
+//            }
+//        }
+//
+//        media = new Media(songs.get(songNumber).toURI().toString());
+//        MediaPlayer mediaPlayer = new MediaPlayer(media);
+//        mediaPlayer.play();
+
+        String song = "music/game song.mp3";
+        Media media = new Media(Paths.get(song).toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
+
+        if(true){
+
+        }
+
+        SelectBg selectBgObj = new SelectBg();
+        Image temp1 = selectBgObj.getBgImg();
+        if (temp1 != null){
+            BackgroundImage.setImage(temp1);
+            System.out.println("Not null" + temp1);
+            System.out.println("null" + temp1);
+        }
+
     }
 }

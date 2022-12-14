@@ -3,6 +3,7 @@ package com.example.demo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,10 +14,12 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 
-public class SelectBg {
+public class SelectBg implements Initializable {
     @FXML
     private Button BackgroundBack;//
 
@@ -80,4 +83,13 @@ public class SelectBg {
         setBgImg(BackgroundImage3);
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Image temp1 = getBgImg();
+        if (temp1 != null){
+            BackgroundImage.setImage(temp1);
+            System.out.println("Not null" + temp1);
+            System.out.println("null" + temp1);
+        }
+    }
 }

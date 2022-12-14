@@ -14,6 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.Parent;
 import javafx.scene.paint.ImagePattern;
@@ -21,7 +23,9 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.shape.Rectangle;
 
+import java.io.File;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -66,13 +70,14 @@ public class Main extends Application implements Initializable {
         /*if (backgroundImage == null){
             back
         }*/
-        SelectBg selectBgObj = new SelectBg();
-        Image temp1 = selectBgObj.getBgImg();
-        if (temp1 != null){
-            BackgroundImage.setImage(temp1);
-            System.out.println("Not null" + temp1);
-        }
-        System.out.println("null" + temp1);
+//        SelectBg selectBgObj = new SelectBg();
+//        Image temp1 = selectBgObj.getBgImg();
+//        if (temp1 != null){
+//            BackgroundImage.setImage(temp1);
+//            System.out.println("Not null" + temp1);
+//            System.out.println("null" + temp1);
+//        }
+
 
     }
 }
