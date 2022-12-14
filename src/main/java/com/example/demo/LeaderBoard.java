@@ -64,5 +64,6 @@ public class LeaderBoard implements Initializable {
 
         Stage leaderBoardStage = (Stage) leaderBoardScene.getScene().getWindow(); //get the GUI of this leaderboard scene
         leaderBoardStage.close(); //close the win scene
+
     }
 }

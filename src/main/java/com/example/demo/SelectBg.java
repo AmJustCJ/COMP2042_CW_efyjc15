@@ -63,6 +63,9 @@ public class SelectBg implements Initializable {
         //now close select background scene
         Stage SelectBackgroundStage = (Stage) SelectBackgroundScene.getScene().getWindow(); //get the GUI of this select background scene
         SelectBackgroundStage.close(); //close the select background scene
+        Controller controllerObj = new Controller();
+        //controllerObj.mediaPlayer.stop();
+        //controllerObj.musicStop = false;
     }
 
     @FXML

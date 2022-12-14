@@ -65,9 +65,12 @@ public class Controller extends Main implements Initializable{
     private File[] files;
     private ArrayList<File> songs;
     private int songNumber;
-    private Media media;
-    private MediaPlayer mediaPlayer;
-
+//    private Media media;
+//    public MediaPlayer mediaPlayer;
+    String song = "music/game song.mp3";
+    Media media = new Media(Paths.get(song).toUri().toString());
+    public MediaPlayer mediaPlayer = new MediaPlayer(media);
+    public boolean musicStop = false;
 
 
     static final int WIDTH = 900;
@@ -184,6 +187,7 @@ public class Controller extends Main implements Initializable{
 
         Stage StartStage = (Stage) startScene.getScene().getWindow(); //get the GUI of main starting scene
         StartStage.close(); //close the main starting scene
+        mediaPlayer.stop();
     }
 
     @FXML
@@ -196,6 +200,7 @@ public class Controller extends Main implements Initializable{
 
         Stage StartStage = (Stage) startScene.getScene().getWindow(); //get the GUI of main starting scene
         StartStage.close(); //close the main starting scene
+        mediaPlayer.stop();
     }
 
     public String getUsername() {
@@ -226,14 +231,13 @@ public class Controller extends Main implements Initializable{
 //        MediaPlayer mediaPlayer = new MediaPlayer(media);
 //        mediaPlayer.play();
 
-        String song = "music/game song.mp3";
-        Media media = new Media(Paths.get(song).toUri().toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
+
         mediaPlayer.play();
 
-        if(true){
-
-        }
+//
+//        if(musicStop){
+//            mediaPlayer.stop();
+//        }
 
         SelectBg selectBgObj = new SelectBg();
         Image temp1 = selectBgObj.getBgImg();

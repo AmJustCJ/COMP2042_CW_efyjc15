@@ -51,6 +51,7 @@ public class Main extends Application implements Initializable {
     private ImageView BackgroundImage;
     @FXML
     private BorderPane startScene;
+    MusicControl musicControlObj = new MusicControl();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -59,6 +60,7 @@ public class Main extends Application implements Initializable {
         Scene StartScene = new Scene(StartRoot);
         primaryStage.setScene(StartScene);
         primaryStage.show();
+        //musicControlObj.playMusic();
     }
 
     public static void main(String[] args) {
