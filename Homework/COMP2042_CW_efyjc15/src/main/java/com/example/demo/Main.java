@@ -52,6 +52,7 @@ public class Main extends Application implements Initializable {
     @FXML
     private BorderPane startScene;
     MusicControl musicControlObj = new MusicControl();
+    String hi;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
