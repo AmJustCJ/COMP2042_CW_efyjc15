@@ -20,8 +20,7 @@ import java.util.Optional;
 
 
 public class EndGame {
-    Controller controllerObj = new Controller();
-    AccountList accListObj = new AccountList();
+
     private static EndGame singleInstance = null;
     String GameModeChoiceString = Controller.GameModeChoiceString;
     private EndGame(){
@@ -57,16 +56,6 @@ public class EndGame {
         homeButton.setTextFill(Color.BLACK);
         root.getChildren().add(homeButton);
         homeButton.relocate(700,700);
-
-        if(Objects.equals(GameModeChoiceString, "TwoThree")){
-            accListObj.writeFileTwoThree(controllerObj.getUsername(), (int)score);
-        }
-        else if (Objects.equals(GameModeChoiceString, "Normal")){
-            accListObj.writeFile(controllerObj.getUsername(), (int)score);
-        }
-        else if(Objects.equals(GameModeChoiceString, "Drunk")){
-            accListObj.writeFileDrunk(controllerObj.getUsername(), (int)score);
-        }
 
         quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

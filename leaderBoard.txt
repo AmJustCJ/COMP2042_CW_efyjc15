@@ -52,4 +52,17 @@ mko 2056
 noc 2048
 sdf 2048
 nmo 2056
-
+normal_test 2048
+normalTest 2048
+NormalTest2 39000
+twoThreetest2 38954
+brm 2056
+brm2 39040
+vrm2 39026
+1norm 488
+2three 106
+2drunk 1068
+4norm 1036
+4norm2 304
+yeeehaw 432
+gjl 552

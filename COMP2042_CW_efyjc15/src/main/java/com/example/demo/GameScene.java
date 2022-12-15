@@ -34,6 +34,7 @@ class GameScene {
 
     String GameModeChoiceString = Controller.GameModeChoiceString;
     Controller controllerObj = new Controller();
+    AccountList accListObj = new AccountList();
 
     static void setN(int number) {
         n = number;
@@ -81,7 +82,7 @@ class GameScene {
             xCell = random.nextInt(aForBound+1);
             yCell = random.nextInt(bForBound+1);
         if (putTwo) {
-            text = textMaker.madeText("1024", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+            text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(2);
@@ -377,30 +378,38 @@ class GameScene {
 
                     haveEmptyCell = GameScene.this.haveEmptyCell();
                     if(winCondition == false){ //if winCondition = false
-                        System.out.println("run");
-                        if(find2048()){
+                        if(find2048() == true){
                             AccountList accListObj = new AccountList();
-                            if(Objects.equals(GameModeChoiceString, "Normal")){
-                                accListObj.writeFile(controllerObj.getUsername(), (int)score);
-                            }
-                            else if(Objects.equals(GameModeChoiceString, "TwoThree")){
-                                accListObj.writeFileTwoThree(controllerObj.getUsername(), (int)score);
-                            }
-                            else{
-                                accListObj.writeFileDrunk(controllerObj.getUsername(), (int)score);
-                            }
+
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Continue?");
-                            alert.setHeaderText("Do you want to continue?");
+                            alert.setHeaderText("Do you want to quit? Yes will quit to main page while cancel will continue");
                             alert.setContentText("Are you sure?????");
 
                             Optional<ButtonType> result = alert.showAndWait();
-                            if (result.get() == ButtonType.OK){
-                                System.out.println("quit");
+                            if (result.get() == ButtonType.OK){ //to quit
+                                if(Objects.equals(GameModeChoiceString, "Normal")){
+                                    accListObj.writeFile(controllerObj.getUsername(), (int)score);
+                                }
+                                else if(Objects.equals(GameModeChoiceString, "TwoThree")){
+                                    accListObj.writeFileTwoThree(controllerObj.getUsername(), (int)score);
+                                }
+                                else{
+                                    accListObj.writeFileDrunk(controllerObj.getUsername(), (int)score);
+                                }
+                                Main mainObj = new Main();
+                                Stage backToMainStage = new Stage();
+                                try {
+                                    mainObj.start(backToMainStage);
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                                primaryStage.close();
                             }
+                            winCondition = true;
                         }
                     }
-                    winCondition = true;
+
 //                    if(!test){
 //
 //                    }
@@ -426,9 +435,20 @@ class GameScene {
 //                    }
                     if (haveEmptyCell == -1) {
                         if (GameScene.this.canNotMove()) {
-                            primaryStage.setScene(endGameScene);
-
+                            if(Objects.equals(GameModeChoiceString, "TwoThree")){
+                                accListObj.writeFileTwoThree(controllerObj.getUsername(), (int)score);
+                                System.out.println("twothree");
+                            }
+                            else if (Objects.equals(GameModeChoiceString, "Normal")){
+                                accListObj.writeFile(controllerObj.getUsername(), (int)score);
+                                System.out.println("norm");
+                            }
+                            else if(Objects.equals(GameModeChoiceString, "Drunk")){
+                                accListObj.writeFileDrunk(controllerObj.getUsername(), (int)score);
+                                System.out.printf("drunk");
+                            }
                             EndGame.getInstance().endGameShow(endGameScene, endGameRoot, primaryStage, score);
+                            primaryStage.setScene(endGameScene);
                             root.getChildren().clear();
                             score = 0;
                         }
