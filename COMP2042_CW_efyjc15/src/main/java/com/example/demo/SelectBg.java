@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -47,8 +48,9 @@ public class SelectBg implements Initializable {
         temp1 = img;
     }
 
-    Image BackgroundImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("confuse nick young.jpg")));
-    Image BackgroundImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("joji2.jpg")));
+
+    Image BackgroundImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("board.jpg")));
+    Image BackgroundImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("chess board.jpg")));
     Image BackgroundImage3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("backgroundMain.jpeg")));
 
     @FXML
@@ -63,9 +65,6 @@ public class SelectBg implements Initializable {
         //now close select background scene
         Stage SelectBackgroundStage = (Stage) SelectBackgroundScene.getScene().getWindow(); //get the GUI of this select background scene
         SelectBackgroundStage.close(); //close the select background scene
-        Controller controllerObj = new Controller();
-        //controllerObj.mediaPlayer.stop();
-        //controllerObj.musicStop = false;
     }
 
     @FXML

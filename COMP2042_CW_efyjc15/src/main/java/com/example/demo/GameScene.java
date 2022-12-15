@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -17,6 +18,7 @@ import javafx.util.Duration;
 
 import java.io.*;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 
 class GameScene {
@@ -28,6 +30,7 @@ class GameScene {
     private Cell[][] cells = new Cell[n][n];
     private Group root;
     private long score = 0;
+    boolean winCondition = false;
 
     String GameModeChoiceString = Controller.GameModeChoiceString;
     Controller controllerObj = new Controller();
@@ -78,15 +81,24 @@ class GameScene {
             xCell = random.nextInt(aForBound+1);
             yCell = random.nextInt(bForBound+1);
         if (putTwo) {
-            text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+            text = textMaker.madeText("1024", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(2);
         } else {
-            text = textMaker.madeText("4", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
-            emptyCells[xCell][yCell].setTextClass(text);
-            root.getChildren().add(text);
-            emptyCells[xCell][yCell].setColorByNumber(4);
+            if(Objects.equals(GameModeChoiceString, "TwoThree")){
+                text = textMaker.madeText("3", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+                emptyCells[xCell][yCell].setTextClass(text);
+                root.getChildren().add(text);
+                emptyCells[xCell][yCell].setColorByNumber(3);
+            }
+            else{
+                text = textMaker.madeText("4", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+                emptyCells[xCell][yCell].setTextClass(text);
+                root.getChildren().add(text);
+                emptyCells[xCell][yCell].setColorByNumber(4);
+            }
+
         }
     }
 
@@ -95,8 +107,6 @@ class GameScene {
             for (int j = 0; j < n; j++) {
                 if (cells[i][j].getNumber() == 0)
                     return 1;
-                else if(cells[i][j].getNumber() == 2048)
-                    return 0;
             }
         }
         return -1;
@@ -259,12 +269,7 @@ class GameScene {
 
     private void moveHorizontally(int i, int j, int des, int sign) {
         if (isValidDesH(i, j, des, sign)) {
-            if(Objects.equals(GameModeChoiceString, "Multiplier")){
-                cells[i][j].Multiplier(cells[i][des + sign]);
-            }
-            else{
-                cells[i][j].adder(cells[i][des + sign]);
-            }
+            cells[i][j].adder(cells[i][des + sign]);
             cells[i][des + sign].setModify(true);
             score += cells[i][des + sign].getNumber(); //added this
         } else if (des != j) {
@@ -283,12 +288,7 @@ class GameScene {
 
     private void moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
-            if (Objects.equals(GameModeChoiceString, "Multiplier")) {
-                cells[i][j].Multiplier(cells[des + sign][j]);
-            }
-            else{
-                cells[i][j].adder(cells[des + sign][j]);
-            }
+            cells[i][j].adder(cells[des + sign][j]);
             cells[des + sign][j].setModify(true);
             score += cells[des + sign][j].getNumber(); //added this
         } else if (des != i) {
@@ -315,6 +315,17 @@ class GameScene {
             }
         }
         return true;
+    }
+
+    public boolean find2048(){
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<n; j++){
+                if(cells[i][j].getNumber() == 2048){
+                   return true;
+                }
+            }
+        }
+        return false;
     }
 
     void game(Scene gameScene, Group root, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
@@ -363,24 +374,56 @@ class GameScene {
                     }
 
                     scoreText.setText(score + "");
+
                     haveEmptyCell = GameScene.this.haveEmptyCell();
-                    for(int i=0; i<n; i++){
-                        for(int j=0; j<n; j++){
-                            if(cells[i][j].getNumber() == 2048){
-                                AccountList accListObj = new AccountList();
+                    if(winCondition == false){ //if winCondition = false
+                        System.out.println("run");
+                        if(find2048()){
+                            AccountList accListObj = new AccountList();
+                            if(Objects.equals(GameModeChoiceString, "Normal")){
                                 accListObj.writeFile(controllerObj.getUsername(), (int)score);
-                                Parent WinRoot = null;
-                                try {
-                                    WinRoot = FXMLLoader.load(getClass().getResource("EndgameWin.fxml"));
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                Scene WinScene = new Scene(WinRoot);
-                                primaryStage.setScene(WinScene);
-                                primaryStage.show();
+                            }
+                            else if(Objects.equals(GameModeChoiceString, "TwoThree")){
+                                accListObj.writeFileTwoThree(controllerObj.getUsername(), (int)score);
+                            }
+                            else{
+                                accListObj.writeFileDrunk(controllerObj.getUsername(), (int)score);
+                            }
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Continue?");
+                            alert.setHeaderText("Do you want to continue?");
+                            alert.setContentText("Are you sure?????");
+
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if (result.get() == ButtonType.OK){
+                                System.out.println("quit");
                             }
                         }
                     }
+                    winCondition = true;
+//                    if(!test){
+//
+//                    }
+//                    for(int i=0; i<n; i++){
+//                        for(int j=0; j<n; j++){
+//                            if(cells[i][j].getNumber() == 2048){
+//                                AccountList accListObj = new AccountList();
+//                                accListObj.writeFile(controllerObj.getUsername(), (int)score);
+//                                Parent WinRoot = null;
+//                                try {
+//                                    WinRoot = FXMLLoader.load(getClass().getResource("EndgameWin.fxml"));
+//                                } catch (IOException e) {
+//                                    throw new RuntimeException(e);
+//                                }
+//                                Scene WinScene = new Scene(WinRoot);
+//                                Stage winStage = new Stage();
+//                                //winStage.setScene(WinScene);
+//                                //winStage.show();
+//                                //primaryStage.setScene(WinScene);
+//                                //primaryStage.show();
+//                            }
+//                        }
+//                    }
                     if (haveEmptyCell == -1) {
                         if (GameScene.this.canNotMove()) {
                             primaryStage.setScene(endGameScene);

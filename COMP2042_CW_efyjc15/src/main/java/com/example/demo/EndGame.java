@@ -1,7 +1,9 @@
 package com.example.demo;
 
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -12,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -45,15 +48,24 @@ public class EndGame {
 
         Button quitButton = new Button("QUIT");
         quitButton.setPrefSize(100,30);
-        quitButton.setTextFill(Color.PINK);
+        quitButton.setTextFill(Color.BLACK);
         root.getChildren().add(quitButton);
         quitButton.relocate(100,700);
 
-        if(Objects.equals(GameModeChoiceString, "Multiplier")){
-            accListObj.writeFileMult(controllerObj.getUsername(), (int)score);
+        Button homeButton = new Button("Back to main page");
+        homeButton.setPrefSize(120,30);
+        homeButton.setTextFill(Color.BLACK);
+        root.getChildren().add(homeButton);
+        homeButton.relocate(700,700);
+
+        if(Objects.equals(GameModeChoiceString, "TwoThree")){
+            accListObj.writeFileTwoThree(controllerObj.getUsername(), (int)score);
         }
-        else{
+        else if (Objects.equals(GameModeChoiceString, "Normal")){
             accListObj.writeFile(controllerObj.getUsername(), (int)score);
+        }
+        else if(Objects.equals(GameModeChoiceString, "Drunk")){
+            accListObj.writeFileDrunk(controllerObj.getUsername(), (int)score);
         }
 
         quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -72,7 +84,36 @@ public class EndGame {
             }
         });
 
+        homeButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Back to main page");
+                alert.setHeaderText("Go back to Main page, where you enter username");
+                alert.setContentText("Are you sure?????");
 
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    root.getChildren().clear();
+                    primaryStage.close(); //added this
+
+                    Stage mainStage = new Stage();
+                    Parent StartRoot;
+                    try {
+                        StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml"));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Scene StartScene = new Scene(StartRoot);
+                    mainStage.setScene(StartScene);
+                    mainStage.show();
+                }
+//                Parent StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml"));
+//                Scene StartScene = new Scene(StartRoot);
+//                primaryStage.setScene(StartScene);
+//                primaryStage.show();
+            }
+        });
 
     }
 }

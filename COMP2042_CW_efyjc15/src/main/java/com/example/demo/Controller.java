@@ -43,8 +43,6 @@ public class Controller extends Main implements Initializable{
     @FXML
     private Button QuitGame;
     @FXML
-    private BorderPane WinScene;
-    @FXML
     public ImageView BackgroundImage; //at sample
     @FXML
     private TableView<Account> table;
@@ -58,19 +56,18 @@ public class Controller extends Main implements Initializable{
     private AnchorPane leaderBoardScene;
     @FXML
     private ChoiceBox<String> modeChoiceBox; //at sample
-    private String[] gameModeChoice = {"Normal", "Multiplier", "Drunk"};
-    @FXML
-    private Slider volumeSlider;
-    private File directory;
-    private File[] files;
-    private ArrayList<File> songs;
-    private int songNumber;
+    private String[] gameModeChoice = {"Normal", "TwoThree", "Drunk"};
+//    @FXML
+//    private Slider volumeSlider;
+//    private File directory;
+//    private File[] files;
+//    private ArrayList<File> songs;
+//    private int songNumber;
 //    private Media media;
 //    public MediaPlayer mediaPlayer;
     String song = "music/game song.mp3";
     Media media = new Media(Paths.get(song).toUri().toString());
     public MediaPlayer mediaPlayer = new MediaPlayer(media);
-    public boolean musicStop = false;
 
 
     static final int WIDTH = 900;
@@ -99,31 +96,12 @@ public class Controller extends Main implements Initializable{
             System.out.println(username);
             Stage startStage = (Stage) startScene.getScene().getWindow();
             startStage.close();
+            mediaPlayer.stop();
 
             Stage primaryStage = new Stage();
-            Stage mainStage = new Stage();
-            Group menuRoot = new Group();
-            Scene menuScene = new Scene(menuRoot, WIDTH, HEIGHT);
-            Group accountRoot = new Group();
-            Scene accountScene = new Scene(accountRoot, WIDTH, HEIGHT, Color.rgb(150, 20, 100, 0.2));
-            Group getAccountRoot = new Group();
-            Scene getAccountScene = new Scene(getAccountRoot, WIDTH, HEIGHT, Color.rgb(200, 20, 100, 0.2));
+
             Group endgameRoot = new Group();
             Scene endGameScene = new Scene(endgameRoot, WIDTH, HEIGHT, Color.rgb(250, 20, 100, 0.2));
-            Group rankRoot = new Group();
-            Scene rankScene = new Scene(rankRoot, WIDTH, HEIGHT, Color.rgb(250, 50, 120, 0.3));
-            BackgroundFill background_fill = new BackgroundFill(Color.rgb(120, 100, 100), CornerRadii.EMPTY, Insets.EMPTY);
-            Background background = new Background(background_fill);
-
-            Rectangle backgroundOfMenu = new Rectangle(240, 120, Color.rgb(120, 120, 120, 0.2));
-            backgroundOfMenu.setX(WIDTH / 2 - 120);
-            backgroundOfMenu.setY(180);
-            menuRoot.getChildren().add(backgroundOfMenu);
-
-            Rectangle backgroundOfMenuForPlay = new Rectangle(240, 140, Color.rgb(120, 20, 100, 0.2));
-            backgroundOfMenuForPlay.setX(WIDTH / 2 - 120);
-            backgroundOfMenuForPlay.setY(180);
-            accountRoot.getChildren().add(backgroundOfMenuForPlay);
 
             Group gameRoot = new Group();
             setGameRoot(gameRoot);
@@ -132,7 +110,7 @@ public class Controller extends Main implements Initializable{
             primaryStage.setScene(gameScene);
             GameScene game = new GameScene();
             game.game(gameScene, gameRoot, primaryStage, endGameScene, endgameRoot);
-
+            primaryStage.setResizable(false);
             primaryStage.show();
         }
         else{
@@ -140,42 +118,8 @@ public class Controller extends Main implements Initializable{
         }
     }
 
-    @FXML
-    void Quit(ActionEvent event) throws IOException {
-        Stage WinStage = (Stage) WinScene.getScene().getWindow();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Quit Dialog");
-        alert.setHeaderText("Quit from this page");
-        alert.setContentText("Are you sure?????");
 
-        if (alert.showAndWait().get() == ButtonType.OK){
-            WinStage.close();
-        }
-    }
-
-    @FXML
-    void Replay(ActionEvent event) throws Exception {
-//        Stage RetryStage = new Stage(); //create new stage
-//        Parent StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml")); //load new stage with sample.fxml
-//        //so that player can retry the game
-        Stage WinStage = (Stage) WinScene.getScene().getWindow(); //get the GUI of this win scene
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Retry");
-        alert.setHeaderText("Retry the game?");
-        alert.setContentText("Are you sure?????");
-
-        if (alert.showAndWait().get() == ButtonType.OK){
-            Main mainObj = new Main();
-            Stage primaryStage = new Stage();
-            mainObj.start(primaryStage);
-//            Scene StartScene = new Scene(StartRoot);
-//            RetryStage.setScene(StartScene);
-//            RetryStage.show(); //show the beginning scene, i.e. the login scene
-            WinStage.close(); //close the win scene
-        }
-    }
 
     @FXML
     void SelectBackground(ActionEvent event) throws IOException {
@@ -209,7 +153,6 @@ public class Controller extends Main implements Initializable{
 
     public void gameMode(ActionEvent event){
         GameModeChoiceString = modeChoiceBox.getValue();
-//        System.out.println(GameModeChoiceString);
     }
 
     @Override
@@ -218,27 +161,7 @@ public class Controller extends Main implements Initializable{
             modeChoiceBox.getItems().addAll(gameModeChoice);
             modeChoiceBox.setOnAction(this::gameMode);
         }
-//        songs = new ArrayList<File>();
-//        directory = new File("music");
-//        files = directory.listFiles();
-//        if(files != null){
-//            for(File file : files){
-//                songs.add(file);
-//            }
-//        }
-//
-//        media = new Media(songs.get(songNumber).toURI().toString());
-//        MediaPlayer mediaPlayer = new MediaPlayer(media);
-//        mediaPlayer.play();
-
-
         mediaPlayer.play();
-
-//
-//        if(musicStop){
-//            mediaPlayer.stop();
-//        }
-
         SelectBg selectBgObj = new SelectBg();
         Image temp1 = selectBgObj.getBgImg();
         if (temp1 != null){

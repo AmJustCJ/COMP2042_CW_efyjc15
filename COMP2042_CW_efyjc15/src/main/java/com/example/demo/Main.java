@@ -60,6 +60,7 @@ public class Main extends Application implements Initializable {
         Parent StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml"));
         Scene StartScene = new Scene(StartRoot);
         primaryStage.setScene(StartScene);
+        primaryStage.setResizable(false);
         primaryStage.show();
         //musicControlObj.playMusic();
     }

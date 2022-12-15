@@ -9,16 +9,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -34,24 +39,19 @@ public class LeaderBoard implements Initializable {
     private Button leaderBoardBack;
     @FXML
     private AnchorPane leaderBoardScene;
+    @FXML
+    private ChoiceBox<String> ScoreChoiceBox;
+    private String[] gameModeChoice = {"Normal", "TwoThree", "Drunk"};
+    public static String GameModeChoiceString = "Normal";
+    String song = "music/Monster inc song.mp3";
+    Media media = new Media(Paths.get(song).toUri().toString());
+    public MediaPlayer mediaPlayer = new MediaPlayer(media);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        AccountList accountListObj = new AccountList();
-        ArrayList<Account> accountList = accountListObj.readFile();
-
-        ObservableList<Account> obList = FXCollections.observableArrayList(accountList);
-
-//        for(Account accountObj : accountList) {
-//            obList.add(accountObj);
-//        }
-
-        usernameColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
-        scoreColumn.setCellValueFactory(new PropertyValueFactory<Account, Integer>("score"));
-        table.setItems(obList);
-//        for(Account accountObj : accountList){
-//            table.setItems((ObservableList<Account>) accountObj);
-//        }
+        ScoreChoiceBox.getItems().addAll(gameModeChoice);
+        ScoreChoiceBox.setOnAction(this::gameMode);
+        mediaPlayer.play();
     }
     @FXML
     void backToMain2(ActionEvent event) throws IOException {
@@ -64,6 +64,33 @@ public class LeaderBoard implements Initializable {
 
         Stage leaderBoardStage = (Stage) leaderBoardScene.getScene().getWindow(); //get the GUI of this leaderboard scene
         leaderBoardStage.close(); //close the win scene
-
+        mediaPlayer.stop();
     }
+
+    public void gameMode(ActionEvent event){
+        GameModeChoiceString = ScoreChoiceBox.getValue();
+        AccountList accountListObj = new AccountList();
+        if(Objects.equals(GameModeChoiceString, "Normal")){
+            ArrayList<Account> accountList = accountListObj.readFile();
+            ObservableList<Account> obList = FXCollections.observableArrayList(accountList);
+            usernameColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
+            scoreColumn.setCellValueFactory(new PropertyValueFactory<Account, Integer>("score"));
+            table.setItems(obList);
+        }
+        else if (Objects.equals(GameModeChoiceString, "TwoThree")){
+            ArrayList<Account> accountList = accountListObj.readFileTwoThree();
+            ObservableList<Account> obList = FXCollections.observableArrayList(accountList);
+            usernameColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
+            scoreColumn.setCellValueFactory(new PropertyValueFactory<Account, Integer>("score"));
+            table.setItems(obList);
+        }
+        else{
+            ArrayList<Account> accountList = accountListObj.readFileDrunk();
+            ObservableList<Account> obList = FXCollections.observableArrayList(accountList);
+            usernameColumn.setCellValueFactory(new PropertyValueFactory<Account, String>("username"));
+            scoreColumn.setCellValueFactory(new PropertyValueFactory<Account, Integer>("score"));
+            table.setItems(obList);
+        }
+    }
+
 }
