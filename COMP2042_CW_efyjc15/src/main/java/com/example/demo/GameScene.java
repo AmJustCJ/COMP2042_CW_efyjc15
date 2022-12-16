@@ -20,6 +20,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
+/**
+ * GameScene class for starting the game
+ */
 class GameScene extends Movement{
     private static int HEIGHT = 700;
     private static int n = 4;
@@ -40,10 +43,17 @@ class GameScene extends Movement{
         LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
     }
 
+    /**
+     * @return get length of cell
+     */
     static double getLENGTH() {
         return LENGTH;
     }
 
+    /**
+     * @param turn This method generate number 2 or 4 on the cells,
+     *             If its TwoThree mode, it will generate 2 or 3
+     */
     private void randomFillNumber(int turn) {
 
         Cell[][] emptyCells = new Cell[n][n];
@@ -102,6 +112,9 @@ class GameScene extends Movement{
         }
     }
 
+    /**
+     * @return check whether a cell is empty
+     */
     private int  haveEmptyCell() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -112,6 +125,12 @@ class GameScene extends Movement{
         return -1;
     }
 
+    /**
+     * @param i get location i
+     * @param j get location j
+     * @param direct get direction of the cell
+     * @return this method decide where to pass the cell to in terms of direction
+     */
     private int passDestination(int i, int j, char direct) {
         int coordinate = j;
         if (direct == 'l') {
@@ -165,6 +184,9 @@ class GameScene extends Movement{
         return -1;
     }
 
+    /**
+     * Move every cells to the left and play a sound effect for move
+     */
     private void moveLeft() {
         for (int i = 0; i < n; i++) {
             for (int j = 1; j < n; j++) {
@@ -177,6 +199,9 @@ class GameScene extends Movement{
         playMoveMusic();
     }
 
+    /**
+     * Move every cells to the right and play a sound effect for move
+     */
     private void moveRight() {
         for (int i = 0; i < n; i++) {
             for (int j = n - 1; j >= 0; j--) {
@@ -189,6 +214,9 @@ class GameScene extends Movement{
         playMoveMusic();
     }
 
+    /**
+     * Move every cells upward and play a sound effect for move
+     */
     private void moveUp() {
         for (int j = 0; j < n; j++) {
             for (int i = 1; i < n; i++) {
@@ -201,6 +229,9 @@ class GameScene extends Movement{
         playMoveMusic();
     }
 
+    /**
+     * Move every cells downward and play a sound effect for move
+     */
     private void moveDown() {
         for (int j = 0; j < n; j++) {
             for (int i = n - 1; i >= 0; i--) {
@@ -213,6 +244,13 @@ class GameScene extends Movement{
         playMoveMusic();
     }
 
+    /**
+     * @param i get location i
+     * @param j get location j
+     * @param des get destination/position of cell
+     * @param sign get sign of cell
+     * @return check if it is valid to move horizontally
+     */
     private boolean isValidDesH(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0) {
             if (cells[i][des + sign].getNumber() == cells[i][j].getNumber() && !cells[i][des + sign].getModify()
@@ -223,6 +261,14 @@ class GameScene extends Movement{
         return false;
     }
 
+    /**
+     * @param i get i
+     * @param j get j
+     * @param des get des
+     * @param sign get sign
+     *             move cells horizontally and add any cells with same number
+     *             if there's 2 cells added together, a sound effect will play
+     */
     private void moveHorizontally(int i, int j, int des, int sign) {
         if (isValidDesH(i, j, des, sign)) {
             cells[i][j].adder(cells[i][des + sign]);
@@ -234,6 +280,13 @@ class GameScene extends Movement{
         }
     }
 
+    /**
+     * @param i get location i
+     * @param j get location j
+     * @param des get des
+     * @param sign get sign
+     * @return check if it is valid to move vertically
+     */
     private boolean isValidDesV(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0)
             if (cells[des + sign][j].getNumber() == cells[i][j].getNumber() && !cells[des + sign][j].getModify()
@@ -243,6 +296,14 @@ class GameScene extends Movement{
         return false;
     }
 
+    /**
+     * @param i get i
+     * @param j get j
+     * @param des get des
+     * @param sign get sign
+     *             move cells vertically and add any cells with same number
+     *             if there's 2 cells added together, a sound effect will play
+     */
     private void moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
             cells[i][j].adder(cells[des + sign][j]);
@@ -254,6 +315,11 @@ class GameScene extends Movement{
         }
     }
 
+    /**
+     * @param i get i
+     * @param j get j
+     * @return check if the cell next to each other have same value or not
+     */
     private boolean haveSameNumberNearly(int i, int j) {
         if (i < n - 1 && j < n - 1) {
             if (cells[i + 1][j].getNumber() == cells[i][j].getNumber())
@@ -264,6 +330,9 @@ class GameScene extends Movement{
         return false;
     }
 
+    /**
+     * @return Check if there's any valid move
+     */
     private boolean canNotMove() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -275,6 +344,9 @@ class GameScene extends Movement{
         return true;
     }
 
+    /**
+     * @return check if 2048 or 1536 is reach
+     */
     public boolean find2048(){
         for(int i=0; i<n; i++) {
             for(int j=0; j<n; j++){
@@ -286,6 +358,9 @@ class GameScene extends Movement{
         return false;
     }
 
+    /**
+     * play sound effect for every cell move
+     */
     public void playMoveMusic(){
         String MoveSong = "music/moveCell.mp3";
         Media mediaMove = new Media(Paths.get(MoveSong).toUri().toString());
@@ -293,6 +368,9 @@ class GameScene extends Movement{
         mediaPlayerMove.play();
     }
 
+    /**
+     * play sound effect for every cell added
+     */
     public void playAddMusic(){
         String AddSong = "music/addCell.mp3";
         Media mediaAdd = new Media(Paths.get(AddSong).toUri().toString());
@@ -300,6 +378,9 @@ class GameScene extends Movement{
         mediaPlayerAdd.play();
     }
 
+    /**
+     * play sound effect when user win the game, reach 2048 or 1536
+     */
     public void playWinMusic(){
         String WinSong = "music/groove song.mp3";
         Media media = new Media(Paths.get(WinSong).toUri().toString());
@@ -307,6 +388,14 @@ class GameScene extends Movement{
         mediaPlayer.play();
     }
 
+    /**
+     * @param gameScene get game scene
+     * @param root get root
+     * @param primaryStage get stage
+     * @param endGameScene get end game scene
+     * @param endGameRoot get end game root
+     *                    this method starts the game
+     */
     void game(Scene gameScene, Group root, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
         this.root = root;
         for (int i = 0; i < n; i++) {
