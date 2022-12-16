@@ -43,7 +43,7 @@ public class LeaderBoard implements Initializable {
     private ChoiceBox<String> ScoreChoiceBox;
     private String[] gameModeChoice = {"Normal", "TwoThree", "Drunk"};
     public static String GameModeChoiceString = "Normal";
-    String song = "music/Monster inc song.mp3";
+    String song = "music/Monster inc.mp3";
     Media media = new Media(Paths.get(song).toUri().toString());
     public MediaPlayer mediaPlayer = new MediaPlayer(media);
 
@@ -55,7 +55,7 @@ public class LeaderBoard implements Initializable {
     }
     @FXML
     void backToMain2(ActionEvent event) throws IOException {
-        Parent StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml")); //load new stage with sample.fxml
+        Parent StartRoot = FXMLLoader.load(getClass().getResource("mainPage.fxml")); //load new stage with mainPage.fxml
         //so that player can go back to the main page
         Stage MainStage = new Stage(); //create new stage
         Scene StartScene = new Scene(StartRoot);

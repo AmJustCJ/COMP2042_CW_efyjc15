@@ -30,13 +30,12 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class Main extends Application implements Initializable {
+public class Main extends Application{
 
     static final int WIDTH = 900;
     static final int HEIGHT = 800;
     private Group gameRoot = new Group();
     private Scene gameScene = new Scene(gameRoot, WIDTH, HEIGHT, Color.rgb(189, 177, 92));
-//    private static Scanner input= new Scanner(System.in);
 
     public void setGameScene(Scene gameScene) {
         this.gameScene = gameScene;
@@ -45,19 +44,15 @@ public class Main extends Application implements Initializable {
     public void setGameRoot(Group gameRoot) {
         this.gameRoot = gameRoot;
     }
-    private static ImageView backgroundImage;
-
     @FXML
     private ImageView BackgroundImage;
     @FXML
     private BorderPane startScene;
-    MusicControl musicControlObj = new MusicControl();
-    String hi;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         //for accessing first page
-        Parent StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent StartRoot = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
         Scene StartScene = new Scene(StartRoot);
         primaryStage.setScene(StartScene);
         primaryStage.setResizable(false);
@@ -69,19 +64,4 @@ public class Main extends Application implements Initializable {
         launch(args);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*if (backgroundImage == null){
-            back
-        }*/
-//        SelectBg selectBgObj = new SelectBg();
-//        Image temp1 = selectBgObj.getBgImg();
-//        if (temp1 != null){
-//            BackgroundImage.setImage(temp1);
-//            System.out.println("Not null" + temp1);
-//            System.out.println("null" + temp1);
-//        }
-
-
-    }
 }

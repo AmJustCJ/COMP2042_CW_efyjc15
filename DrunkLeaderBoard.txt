@@ -29,3 +29,8 @@ fwf 1244
 vdw 12368
 HaloDrunk 2048
 HaloDrunk2 14416
+vas 1120
+btnm 2056
+inini5 2048
+inini6 28872
+cb2 1136

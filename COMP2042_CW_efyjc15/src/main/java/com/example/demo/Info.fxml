@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="infoPane" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.InfoControl">
+   <children>
+      <ImageView fitHeight="448.0" fitWidth="600.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" scaleY="1.8">
+         <image>
+            <Image url="@black.png" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" layoutX="136.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How to Play???" wrappingWidth="375.73675537109375">
+         <font>
+            <Font name="System Bold" size="49.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="72.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-The game 2048 is played on a simple 4X4 grid with sliding numbered tiles that may be moved with the four arrow keys. Each turn, a new tile with a value of either 2 or 4 randomly appears in an unoccupied space on the board. The user's score starts at zero, and is increased whenever two tiles combine, by the value of the new tile. When a 2048-valued tile arrives on the board, the game is won. Players can keep playing after that to earn higher scores. The game is over when there are no more legal moves left for the player" textAlignment="JUSTIFY" wrappingWidth="487.0500030517578">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="173.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TwoThree Mode">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="152.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-This game mode spawn 2 or 3 instead of 2 or 4, making it harder for player. Player can only win when 2048 or 1536 is reached" textAlignment="JUSTIFY" wrappingWidth="295.3699645996094">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="198.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drunk Mode">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="152.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-This game mode reverse the CONTROL ! meaning that when you press up arrow key, the tiles will move down. Vice versa. And left arrow key will make the tiles move to the right." textAlignment="JUSTIFY" wrappingWidth="295.3699645996094">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Button fx:id="backButton" layoutX="486.0" layoutY="536.0" mnemonicParsing="false" onAction="#backToMainInfo" text="Back">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

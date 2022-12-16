@@ -9,12 +9,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -30,6 +33,13 @@ public class EndGame {
         if(singleInstance == null)
             singleInstance= new EndGame();
         return singleInstance;
+    }
+
+    public void playEndMusic(){
+        String loseSong = "music/lose.mp3";
+        Media media = new Media(Paths.get(loseSong).toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
     }
 
     public void endGameShow(Scene endGameScene, Group root, Stage primaryStage,long score){
@@ -56,6 +66,8 @@ public class EndGame {
         homeButton.setTextFill(Color.BLACK);
         root.getChildren().add(homeButton);
         homeButton.relocate(700,700);
+
+        playEndMusic();
 
         quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -89,7 +101,7 @@ public class EndGame {
                     Stage mainStage = new Stage();
                     Parent StartRoot;
                     try {
-                        StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml"));
+                        StartRoot = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -97,7 +109,7 @@ public class EndGame {
                     mainStage.setScene(StartScene);
                     mainStage.show();
                 }
-//                Parent StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml"));
+//                Parent StartRoot = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
 //                Scene StartScene = new Scene(StartRoot);
 //                primaryStage.setScene(StartScene);
 //                primaryStage.show();

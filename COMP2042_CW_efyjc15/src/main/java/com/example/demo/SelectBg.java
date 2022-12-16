@@ -10,12 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BackgroundImage;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -51,11 +49,11 @@ public class SelectBg implements Initializable {
 
     Image BackgroundImage1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("board.jpg")));
     Image BackgroundImage2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("chess board.jpg")));
-    Image BackgroundImage3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("backgroundMain.jpeg")));
+    Image BackgroundImage3 = new Image(Objects.requireNonNull(getClass().getResourceAsStream("blackBoard.jpg")));
 
     @FXML
     void backToMain(ActionEvent event) throws IOException {
-        Parent StartRoot = FXMLLoader.load(getClass().getResource("sample.fxml")); //load new stage with sample.fxml
+        Parent StartRoot = FXMLLoader.load(getClass().getResource("mainPage.fxml")); //load new stage with mainPage.fxml
         //so that player can go back to the main page
         Stage MainStage = new Stage(); //create new stage
         Scene StartScene = new Scene(StartRoot);
@@ -90,8 +88,6 @@ public class SelectBg implements Initializable {
         Image temp1 = getBgImg();
         if (temp1 != null){
             BackgroundImage.setImage(temp1);
-            System.out.println("Not null" + temp1);
-            System.out.println("null" + temp1);
         }
     }
 }

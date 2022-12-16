@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import javafx.animation.PauseTransition;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,17 +35,13 @@ import java.util.Scanner;
 
 public class Controller extends Main implements Initializable{
     @FXML
-    private Button PlayButton; //at sample
+    private Button PlayButton; //at mainPage
     @FXML
-    private TextField TextInput; //at sample
+    private TextField TextInput; //at mainPage
     @FXML
-    private BorderPane startScene; //at sample
+    private BorderPane startScene; //at mainPage
     @FXML
-    private Button PlayAgain;
-    @FXML
-    private Button QuitGame;
-    @FXML
-    public ImageView BackgroundImage; //at sample
+    public ImageView BackgroundImage; //at mainPage
     @FXML
     private TableView<Account> table;
     @FXML
@@ -55,16 +53,11 @@ public class Controller extends Main implements Initializable{
     @FXML
     private AnchorPane leaderBoardScene;
     @FXML
-    private ChoiceBox<String> modeChoiceBox; //at sample
+    private ChoiceBox<String> modeChoiceBox; //at mainPage
+    @FXML
+    private Button InfoButton;
     private String[] gameModeChoice = {"Normal", "TwoThree", "Drunk"};
-//    @FXML
-//    private Slider volumeSlider;
-//    private File directory;
-//    private File[] files;
-//    private ArrayList<File> songs;
-//    private int songNumber;
-//    private Media media;
-//    public MediaPlayer mediaPlayer;
+
     String song = "music/game song.mp3";
     Media media = new Media(Paths.get(song).toUri().toString());
     public MediaPlayer mediaPlayer = new MediaPlayer(media);
@@ -74,7 +67,10 @@ public class Controller extends Main implements Initializable{
     static final int HEIGHT = 800;
     private Group gameRoot = new Group();
     private Scene gameScene = new Scene(gameRoot, WIDTH, HEIGHT, Color.rgb(189, 177, 92));
-    private static Scanner input= new Scanner(System.in);
+
+    public static String username;
+
+    public static String GameModeChoiceString;
 
     public void setGameScene(Scene gameScene) {
         this.gameScene = gameScene;
@@ -84,9 +80,14 @@ public class Controller extends Main implements Initializable{
         this.gameRoot = gameRoot;
     }
 
-    public static String username;
+    public String getUsername() {
+        return username;
+    }
 
-    public static String GameModeChoiceString;
+    public void gameMode(ActionEvent event){
+        GameModeChoiceString = modeChoiceBox.getValue();
+    }
+
 
     @FXML
     public void Play(ActionEvent event) {
@@ -114,12 +115,16 @@ public class Controller extends Main implements Initializable{
             primaryStage.show();
         }
         else{
-            System.out.println("please enter username");
+            Alert Error = new Alert(Alert.AlertType.ERROR);
+            Error.setTitle("Error");
+            Error.setHeaderText("Please input username without spacebar and/or choose a game mode!");
+
+            PauseTransition delay = new PauseTransition(Duration.seconds(3));
+            delay.setOnFinished(e -> Error.hide());
+            Error.show();
+            delay.play();
         }
     }
-
-
-
 
     @FXML
     void SelectBackground(ActionEvent event) throws IOException {
@@ -147,13 +152,20 @@ public class Controller extends Main implements Initializable{
         mediaPlayer.stop();
     }
 
-    public String getUsername() {
-        return username;
+    @FXML
+    void showInfo(ActionEvent event) throws IOException {
+        Stage showInfoStage = new Stage();
+        Parent InfoRoot = FXMLLoader.load(getClass().getResource("Info.fxml"));
+        Scene showLeaderBoardScene = new Scene(InfoRoot);
+        showInfoStage.setScene(showLeaderBoardScene);
+        showInfoStage.show();
+
+        Stage StartStage = (Stage) startScene.getScene().getWindow(); //get the GUI of main starting scene
+        StartStage.close(); //close the main starting scene
+        mediaPlayer.stop();
     }
 
-    public void gameMode(ActionEvent event){
-        GameModeChoiceString = modeChoiceBox.getValue();
-    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

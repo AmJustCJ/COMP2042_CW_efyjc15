@@ -59,14 +59,6 @@ public class Cell {
         setColorByNumber(getNumber());
     }
 
-//    void Multiplier(Cell cell) {
-//        cell.getTextClass().setText((cell.getNumber() * this.getNumber()) + "");
-//        textClass.setText("0");
-//        root.getChildren().remove(textClass);
-//        cell.setColorByNumber(cell.getNumber());
-//        setColorByNumber(getNumber());
-//    }
-
     void setColorByNumber(int number) {
         switch (number) {
             case 0:

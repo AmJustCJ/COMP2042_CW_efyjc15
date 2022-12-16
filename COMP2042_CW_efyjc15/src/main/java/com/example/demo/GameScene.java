@@ -9,12 +9,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.*;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
@@ -80,7 +83,7 @@ class GameScene {
             xCell = random.nextInt(aForBound+1);
             yCell = random.nextInt(bForBound+1);
         if (putTwo) {
-            text = textMaker.madeText("1024", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+            text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(2);
@@ -185,6 +188,7 @@ class GameScene {
                 }
             }
         } // move left
+        playMoveMusic();
     }
 
     private void moveRight() {
@@ -208,6 +212,7 @@ class GameScene {
                 }
             }
         } // move right
+        playMoveMusic();
     }
 
     private void moveUp() {
@@ -231,6 +236,7 @@ class GameScene {
                 }
             }
         } //move up
+        playMoveMusic();
     }
 
     private void moveDown() {
@@ -254,6 +260,7 @@ class GameScene {
                 }
             }
         }// if game mode is "normal" or "mult", move down still move down
+        playMoveMusic();
     }
 
     private boolean isValidDesH(int i, int j, int des, int sign) {
@@ -271,6 +278,7 @@ class GameScene {
             cells[i][j].adder(cells[i][des + sign]);
             cells[i][des + sign].setModify(true);
             score += cells[i][des + sign].getNumber(); //added this
+            playAddMusic();
         } else if (des != j) {
             cells[i][j].changeCell(cells[i][des]);
         }
@@ -290,6 +298,7 @@ class GameScene {
             cells[i][j].adder(cells[des + sign][j]);
             cells[des + sign][j].setModify(true);
             score += cells[des + sign][j].getNumber(); //added this
+            playAddMusic();
         } else if (des != i) {
             cells[i][j].changeCell(cells[des][j]);
         }
@@ -319,12 +328,33 @@ class GameScene {
     public boolean find2048(){
         for(int i=0; i<n; i++) {
             for(int j=0; j<n; j++){
-                if(cells[i][j].getNumber() == 2048){
+                if(cells[i][j].getNumber() == 2048 || cells[i][j].getNumber() == 1536){
                    return true;
                 }
             }
         }
         return false;
+    }
+
+    public void playMoveMusic(){
+        String MoveSong = "music/moveCell.mp3";
+        Media mediaMove = new Media(Paths.get(MoveSong).toUri().toString());
+        MediaPlayer mediaPlayerMove = new MediaPlayer(mediaMove);
+        mediaPlayerMove.play();
+    }
+
+    public void playAddMusic(){
+        String AddSong = "music/addCell.mp3";
+        Media mediaAdd = new Media(Paths.get(AddSong).toUri().toString());
+        MediaPlayer mediaPlayerAdd = new MediaPlayer(mediaAdd);
+        mediaPlayerAdd.play();
+    }
+
+    public void playWinMusic(){
+        String WinSong = "music/groove song.mp3";
+        Media media = new Media(Paths.get(WinSong).toUri().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
     }
 
     void game(Scene gameScene, Group root, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
@@ -385,6 +415,8 @@ class GameScene {
                                 dialog.setDialogPane(dialogPane);
                                 dialog.setTitle("YOU WIN");
 
+                                playWinMusic();
+
                                 Optional<ButtonType> result = dialog.showAndWait();
                                 if(result.get() == ButtonType.OK){
                                     System.out.println("ok");
@@ -405,10 +437,12 @@ class GameScene {
                                         throw new RuntimeException(e);
                                     }
                                     primaryStage.close();
+//                                    mediaPlayer.stop();
                                 }
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
+                            }
+                            catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
 //                            AccountList accListObj = new AccountList();
 
 //                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
