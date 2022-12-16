@@ -60,6 +60,6 @@
 <li>EndGame.java</li>
 <li>GameScene.java</li>
 <li>Main.java</li>
-<li>TextMaker</li>
+<li>TextMaker.java</li>
 </ul>
 <br><br>

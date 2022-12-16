@@ -27,6 +27,9 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 
+/**
+ * Controller class for leaderBoard scene
+ */
 public class LeaderBoard implements Initializable {
 
     @FXML
@@ -47,12 +50,24 @@ public class LeaderBoard implements Initializable {
     Media media = new Media(Paths.get(song).toUri().toString());
     public MediaPlayer mediaPlayer = new MediaPlayer(media);
 
+    /**
+     * @param url initialize method, allow user to choose which game mode they want from choice box
+     *            in order to display the score from respective game mode
+     *            It also play a leaderBoard music when user enter it everytime
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ScoreChoiceBox.getItems().addAll(gameModeChoice);
         ScoreChoiceBox.setOnAction(this::gameMode);
         mediaPlayer.play();
     }
+
+    /**
+     * @param event When user click this button, it will bring user back to main page
+     *              and close leaderBoard scene
+     * @throws IOException
+     */
     @FXML
     void backToMain2(ActionEvent event) throws IOException {
         Parent StartRoot = FXMLLoader.load(getClass().getResource("mainPage.fxml")); //load new stage with mainPage.fxml
@@ -67,6 +82,10 @@ public class LeaderBoard implements Initializable {
         mediaPlayer.stop();
     }
 
+    /**
+     * @param event allow user to choose which game mode they want. Once chosen, method from AccountList will be call
+     *              in order to read the text file, sort it, return it here. And be display in the tableview.
+     */
     public void gameMode(ActionEvent event){
         GameModeChoiceString = ScoreChoiceBox.getValue();
         AccountList accountListObj = new AccountList();

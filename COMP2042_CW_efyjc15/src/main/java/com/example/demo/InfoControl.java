@@ -12,6 +12,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
+/**
+ * Controller class for How to Play scene
+ */
 public class InfoControl {
     @FXML
     private Button backButton;
@@ -19,6 +22,10 @@ public class InfoControl {
     private AnchorPane infoPane;
 
 
+    /**
+     * @param event when user press this button, it will bring user back to main page and close the How to play scene
+     * @throws IOException
+     */
     @FXML
     void backToMainInfo(ActionEvent event) throws IOException {
         Parent StartRoot = FXMLLoader.load(getClass().getResource("mainPage.fxml")); //load new stage with mainPage.fxml

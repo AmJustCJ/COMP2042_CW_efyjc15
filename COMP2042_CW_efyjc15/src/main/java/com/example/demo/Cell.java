@@ -6,6 +6,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+/**
+ * Cell class contain the structure of the cells and their colors
+ */
 public class Cell {
     private Rectangle rectangle;
     private Group root;
@@ -32,10 +35,16 @@ public class Cell {
         root.getChildren().add(rectangle);
     }
 
+    /**
+     * @param textClass set text
+     */
     void setTextClass(Text textClass) {
         this.textClass = textClass;
     }
 
+    /**
+     * @param cell change the cell text
+     */
     void changeCell(Cell cell) {
         TextMaker.changeTwoText(textClass, cell.getTextClass());
         root.getChildren().remove(cell.getTextClass());
@@ -51,6 +60,10 @@ public class Cell {
         cell.setColorByNumber(cell.getNumber());
     }
 
+    /**
+     * @param cell Add both cell together, remove one of the original cell and update
+     *             the other cell with the added value
+     */
     void adder(Cell cell) {
         cell.getTextClass().setText((cell.getNumber() + this.getNumber()) + "");
         textClass.setText("0");
@@ -59,6 +72,9 @@ public class Cell {
         setColorByNumber(getNumber());
     }
 
+    /**
+     * @param number change the cell color base on their numbers
+     */
     void setColorByNumber(int number) {
         switch (number) {
             case 0:
@@ -159,18 +175,30 @@ public class Cell {
 
     }
 
+    /**
+     * @return rectangle.getX()
+     */
     double getX() {
         return rectangle.getX();
     }
 
+    /**
+     * @return return rectangle.getY()
+     */
     double getY() {
         return rectangle.getY();
     }
 
+    /**
+     * @return the number of the cells in integer form
+     */
     int getNumber() {
         return Integer.parseInt(textClass.getText());
     }
 
+    /**
+     * @return return textClass
+     */
     private Text getTextClass() {
         return textClass;
     }

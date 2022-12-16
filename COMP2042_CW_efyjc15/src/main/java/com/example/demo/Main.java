@@ -30,6 +30,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+/**
+ * Main class, when start, it runs the mainPage fxml with brings user to the main scene
+ */
 public class Main extends Application{
 
     static final int WIDTH = 900;
@@ -49,6 +52,10 @@ public class Main extends Application{
     @FXML
     private BorderPane startScene;
 
+    /**
+     * @param primaryStage load the mainPage.fxml
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         //for accessing first page
@@ -60,6 +67,9 @@ public class Main extends Application{
         //musicControlObj.playMusic();
     }
 
+    /**
+     * @param args run the application
+     */
     public static void main(String[] args) {
         launch(args);
     }

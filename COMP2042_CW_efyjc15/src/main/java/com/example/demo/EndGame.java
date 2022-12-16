@@ -22,10 +22,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 
+/**
+ * EndGame class where it runs the end game scene for the application
+ */
 public class EndGame {
 
     private static EndGame singleInstance = null;
-    String GameModeChoiceString = Controller.GameModeChoiceString;
     private EndGame(){
 
     }
@@ -35,6 +37,9 @@ public class EndGame {
         return singleInstance;
     }
 
+    /**
+     * play a sound effect when player lose(when no valid moves are available)
+     */
     public void playEndMusic(){
         String loseSong = "music/lose.mp3";
         Media media = new Media(Paths.get(loseSong).toUri().toString());
@@ -42,6 +47,12 @@ public class EndGame {
         mediaPlayer.play();
     }
 
+    /**
+     * @param endGameScene get the endGameScene
+     * @param root get root
+     * @param primaryStage prepare to set the stage as end game scene
+     * @param score score concluded after user finish the game
+     */
     public void endGameShow(Scene endGameScene, Group root, Stage primaryStage,long score){
         Text text = new Text("GAME OVER :(");
         text.relocate(250,250);
@@ -70,6 +81,10 @@ public class EndGame {
         playEndMusic();
 
         quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            /**
+             * @param event when user click quit button, alert window will pop up asking for
+             *              confirmation. If yes the application will exit
+             */
             @Override
             public void handle(MouseEvent event) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -86,6 +101,10 @@ public class EndGame {
         });
 
         homeButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            /**
+             * @param event when user click home button, alert window will pop up asking for
+             *              confirmation. If yes the application will bring user back to main page
+             */
             @Override
             public void handle(MouseEvent event) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

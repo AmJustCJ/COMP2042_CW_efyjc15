@@ -33,6 +33,9 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+/**
+ * Controller class for the main page of the application
+ */
 public class Controller extends Main implements Initializable{
     @FXML
     private Button PlayButton; //at mainPage
@@ -72,23 +75,41 @@ public class Controller extends Main implements Initializable{
 
     public static String GameModeChoiceString;
 
+    /**
+     * @param gameScene set the game scene
+     */
     public void setGameScene(Scene gameScene) {
         this.gameScene = gameScene;
     }
 
+    /**
+     * @param gameRoot set the game root
+     */
     public void setGameRoot(Group gameRoot) {
         this.gameRoot = gameRoot;
     }
 
+    /**
+     * @return return the username that the player entered
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * @param event allow user to choose which game mode they want
+     */
     public void gameMode(ActionEvent event){
         GameModeChoiceString = modeChoiceBox.getValue();
     }
 
 
+    /**
+     * @param event play button which allow the user to play the game.
+     *              However, user must enter username without spacebar and
+     *              must choose a game mode. else they won't be able to play the game
+     *              and a alert window will pop up asking user to input correctly
+     */
     @FXML
     public void Play(ActionEvent event) {
         username = TextInput.getText();
@@ -126,6 +147,11 @@ public class Controller extends Main implements Initializable{
         }
     }
 
+    /**
+     * @param event upon clicking this button, main page will close and user
+     *              will go to select background scene
+     * @throws IOException
+     */
     @FXML
     void SelectBackground(ActionEvent event) throws IOException {
         Stage selectBackgroundStage = new Stage();
@@ -139,6 +165,11 @@ public class Controller extends Main implements Initializable{
         mediaPlayer.stop();
     }
 
+    /**
+     * @param event upon clicking this button, main page will close and user
+     *              will go to leaderBoard scene
+     * @throws IOException
+     */
     @FXML
     void showLeaderBoard(ActionEvent event) throws IOException {
         Stage showLeaderBoardStage = new Stage();
@@ -152,6 +183,11 @@ public class Controller extends Main implements Initializable{
         mediaPlayer.stop();
     }
 
+    /**
+     * @param event upon clicking this button, main page will close and user
+     *              will go to How to play scene
+     * @throws IOException
+     */
     @FXML
     void showInfo(ActionEvent event) throws IOException {
         Stage showInfoStage = new Stage();
@@ -165,6 +201,11 @@ public class Controller extends Main implements Initializable{
         mediaPlayer.stop();
     }
 
+    /**
+     * @param url initialize method allow user to choose game mode from choice box
+     *            and set the background image everytime user change it in select background scene
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(modeChoiceBox != null){

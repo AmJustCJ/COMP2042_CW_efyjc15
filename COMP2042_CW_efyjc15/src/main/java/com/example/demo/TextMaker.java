@@ -5,6 +5,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * TextMaker class modified the text in cell
+ */
 class TextMaker {
     private static TextMaker singleInstance = null;
 
@@ -18,6 +21,13 @@ class TextMaker {
         return singleInstance;
     }
 
+    /**
+     * @param input set text as input
+     * @param xCell set location for xCell
+     * @param yCell set location for yCell
+     * @param root get root
+     * @return text
+     */
     Text madeText(String input, double xCell, double yCell, Group root) {
         double length = GameScene.getLENGTH();
         double fontSize = (2 * length) / 7.0;
@@ -29,6 +39,11 @@ class TextMaker {
         return text;
     }
 
+    /**
+     * @param first first text
+     * @param second second text
+     *               switch the texts
+     */
     static void changeTwoText(Text first, Text second) {
         String temp;
         temp = first.getText();

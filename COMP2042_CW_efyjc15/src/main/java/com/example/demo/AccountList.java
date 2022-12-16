@@ -3,12 +3,22 @@ package com.example.demo;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * AccountList class contain write and read File method, Once user finish the game, write file method will store username
+ * and password inside text file. When user click leaderBoard button in main page and select a game mode they wanted to
+ * see, read file method will run and store data from text file into arraylist and sort them.
+ */
 public class AccountList {
     ArrayList<Account> accountList = new ArrayList<>();
     File myFile = new File("leaderBoard.txt");
     File myFileTwoThree = new File("TwoThreeLeaderBoard.txt");
     File myFileDrunk = new File("DrunkLeaderBoard.txt");
 
+    /**
+     * @param username
+     * @param score
+     * store username and score into text file for normal game mode
+     */
     public void writeFile(String username, int score){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(myFile, true));
@@ -20,6 +30,11 @@ public class AccountList {
         }
     }
 
+    /**
+     * @param username
+     * @param score
+     * store username and score into text file for TwoThree game mode
+     */
     public void writeFileTwoThree(String username, int score){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(myFileTwoThree, true));
@@ -31,6 +46,11 @@ public class AccountList {
         }
     }
 
+    /**
+     * @param username
+     * @param score
+     * store username and score into text file for Drunk game mode
+     */
     public void writeFileDrunk(String username, int score){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(myFileDrunk, true));
@@ -42,6 +62,11 @@ public class AccountList {
         }
     }
 
+    /**
+     * read the normal game mode file, store their data into an arraylist
+     * sort the arraylist
+     * @return a sorted arraylist
+     */
     public ArrayList<Account> readFile(){
         try{
             BufferedReader br = new BufferedReader(new FileReader(myFile));
@@ -63,6 +88,11 @@ public class AccountList {
         }
     }
 
+    /**
+     * read the TwoThree game mode file, store their data into an arraylist
+     * sort the arraylist
+     * @return a sorted arraylist
+     */
     public ArrayList<Account> readFileTwoThree(){
         try{
             BufferedReader br = new BufferedReader(new FileReader(myFileTwoThree));
@@ -84,6 +114,11 @@ public class AccountList {
         }
     }
 
+    /**
+     * read the Drunk game mode file, store their data into an arraylist
+     * sort the arraylist
+     * @return a sorted arraylist
+     */
     public ArrayList<Account> readFileDrunk(){
         try{
             BufferedReader br = new BufferedReader(new FileReader(myFileDrunk));
@@ -105,6 +140,9 @@ public class AccountList {
         }
     }
 
+    /**
+     * @param accountList sort the arraylists
+     */
     public void bubbleSort(ArrayList<Account> accountList){
         for(int i = 0; i<accountList.size() - 1; i++){ //bubble sort to sort the text file data
             for(int j = 0; j<accountList.size() - i - 1; j++){
