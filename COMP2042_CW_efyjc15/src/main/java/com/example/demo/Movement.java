@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Random;
 
+/**
+ * Movement class to control all movement and cell generating mechanic
+ */
 public class Movement {
     private static int HEIGHT = 700;
     public static int n = 4;
