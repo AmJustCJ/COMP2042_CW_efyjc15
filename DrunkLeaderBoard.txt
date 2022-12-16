@@ -35,3 +35,6 @@ inini5 2048
 inini6 28872
 cb2 1136
 hhgfd 484
+drunk 1360
+2drunk12 2056
+2drunk123 41008
