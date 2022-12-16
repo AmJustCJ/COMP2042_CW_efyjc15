@@ -80,7 +80,7 @@ public class Movement {
         xCell = random.nextInt(aForBound+1);
         yCell = random.nextInt(bForBound+1);
         if (putTwo) {
-            text = textMaker.madeText("1024", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+            text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(2);

@@ -123,7 +123,7 @@ public class Controller extends Main implements Initializable{
             Stage primaryStage = new Stage();
 
             Group endgameRoot = new Group();
-            Scene endGameScene = new Scene(endgameRoot, WIDTH, HEIGHT, Color.rgb(250, 20, 100, 0.2));
+            Scene endGameScene = new Scene(endgameRoot, WIDTH, HEIGHT, Color.rgb(255, 41, 41, 1));
 
             Group gameRoot = new Group();
             setGameRoot(gameRoot);
