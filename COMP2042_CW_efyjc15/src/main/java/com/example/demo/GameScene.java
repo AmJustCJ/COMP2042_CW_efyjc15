@@ -6,9 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Control;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
@@ -82,7 +80,7 @@ class GameScene {
             xCell = random.nextInt(aForBound+1);
             yCell = random.nextInt(bForBound+1);
         if (putTwo) {
-            text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+            text = textMaker.madeText("1024", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(2);
@@ -379,33 +377,65 @@ class GameScene {
                     haveEmptyCell = GameScene.this.haveEmptyCell();
                     if(winCondition == false){ //if winCondition = false
                         if(find2048() == true){
-                            AccountList accListObj = new AccountList();
+                            FXMLLoader loadWin = new FXMLLoader();
+                            loadWin.setLocation(getClass().getResource("EndgameWin.fxml"));
+                            try {
+                                DialogPane dialogPane = loadWin.load();
+                                Dialog<ButtonType> dialog = new Dialog<>();
+                                dialog.setDialogPane(dialogPane);
+                                dialog.setTitle("YOU WIN");
 
-                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                            alert.setTitle("Continue?");
-                            alert.setHeaderText("Do you want to quit? Yes will quit to main page while cancel will continue");
-                            alert.setContentText("Are you sure?????");
-
-                            Optional<ButtonType> result = alert.showAndWait();
-                            if (result.get() == ButtonType.OK){ //to quit
-                                if(Objects.equals(GameModeChoiceString, "Normal")){
-                                    accListObj.writeFile(controllerObj.getUsername(), (int)score);
+                                Optional<ButtonType> result = dialog.showAndWait();
+                                if(result.get() == ButtonType.OK){
+                                    System.out.println("ok");
+                                    if(Objects.equals(GameModeChoiceString, "Normal")){
+                                        accListObj.writeFile(controllerObj.getUsername(), (int)score);
+                                    }
+                                    else if(Objects.equals(GameModeChoiceString, "TwoThree")){
+                                        accListObj.writeFileTwoThree(controllerObj.getUsername(), (int)score);
+                                    }
+                                    else{
+                                        accListObj.writeFileDrunk(controllerObj.getUsername(), (int)score);
+                                    }
+                                    Main mainObj = new Main();
+                                    Stage backToMainStage = new Stage();
+                                    try {
+                                        mainObj.start(backToMainStage);
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                    primaryStage.close();
                                 }
-                                else if(Objects.equals(GameModeChoiceString, "TwoThree")){
-                                    accListObj.writeFileTwoThree(controllerObj.getUsername(), (int)score);
-                                }
-                                else{
-                                    accListObj.writeFileDrunk(controllerObj.getUsername(), (int)score);
-                                }
-                                Main mainObj = new Main();
-                                Stage backToMainStage = new Stage();
-                                try {
-                                    mainObj.start(backToMainStage);
-                                } catch (Exception e) {
+                                } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
-                                primaryStage.close();
-                            }
+//                            AccountList accListObj = new AccountList();
+
+//                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                            alert.setTitle("Continue?");
+//                            alert.setHeaderText("Do you want to quit? Yes will quit to main page while cancel will continue");
+//                            alert.setContentText("Are you sure?????");
+//
+//                            Optional<ButtonType> result = alert.showAndWait();
+//                            if (result.get() == ButtonType.OK){ //to quit
+//                                if(Objects.equals(GameModeChoiceString, "Normal")){
+//                                    accListObj.writeFile(controllerObj.getUsername(), (int)score);
+//                                }
+//                                else if(Objects.equals(GameModeChoiceString, "TwoThree")){
+//                                    accListObj.writeFileTwoThree(controllerObj.getUsername(), (int)score);
+//                                }
+//                                else{
+//                                    accListObj.writeFileDrunk(controllerObj.getUsername(), (int)score);
+//                                }
+//                                Main mainObj = new Main();
+//                                Stage backToMainStage = new Stage();
+//                                try {
+//                                    mainObj.start(backToMainStage);
+//                                } catch (Exception e) {
+//                                    throw new RuntimeException(e);
+//                                }
+//                                primaryStage.close();
+//                            }
                             winCondition = true;
                         }
                     }

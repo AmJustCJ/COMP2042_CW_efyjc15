@@ -66,3 +66,5 @@ vrm2 39026
 4norm2 304
 yeeehaw 432
 gjl 552
+HaloNorm 2096
+HaloNorm2 10304

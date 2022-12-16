@@ -26,3 +26,6 @@ dru2 37072
 feetus 1128
 fedv 584
 fwf 1244
+vdw 12368
+HaloDrunk 2048
+HaloDrunk2 14416

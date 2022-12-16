@@ -1,36 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="WinScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.WinSceneControl">
-   <center>
-      <AnchorPane prefHeight="416.0" prefWidth="626.0" BorderPane.alignment="CENTER">
+
+<DialogPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <buttonTypes>
+      <ButtonType fx:constant="OK" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+   <graphic>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="598.0">
          <children>
-            <Text layoutX="86.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Congrats! You Win !" wrappingWidth="442.13677978515625">
+            <ImageView fitHeight="375.0" fitWidth="600.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.3">
+               <image>
+                  <Image url="@leaderboardBG.jpg" />
+               </image>
+            </ImageView>
+            <Text layoutX="79.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Congrats! You Win" wrappingWidth="486.13665771484375">
                <font>
-                  <Font size="48.0" />
+                  <Font name="System Bold" size="49.0" />
                </font>
             </Text>
-            <Button fx:id="PlayAgain" layoutX="46.0" layoutY="240.0" mnemonicParsing="false" onAction="#Replay" text="Continue Play">
+            <Text fill="#efefef" layoutX="79.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Do you want to exit to main? " wrappingWidth="512.4996032714844">
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold" size="35.0" />
                </font>
-            </Button>
-            <Button fx:id="QuitGame" layoutX="448.0" layoutY="240.0" mnemonicParsing="false" onAction="#Quit" text="Quit">
+            </Text>
+            <ImageView fitHeight="192.0" fitWidth="216.0" layoutX="197.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@dancin%20cat.gif" />
+               </image>
+            </ImageView>
+            <Text fill="#efefef" layoutX="14.0" layoutY="357.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click &quot;OK&quot; to quit to Main page, &quot;Cancel&quot; to continue game!" textAlignment="CENTER" wrappingWidth="586.8996887207031">
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
-            </Button>
-            <Button fx:id="backToMainWin" layoutX="223.0" layoutY="240.0" mnemonicParsing="false" onAction="#backToMainPage" text="Back to main page">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
+            </Text>
          </children>
       </AnchorPane>
-   </center>
-</BorderPane>
+   </graphic>
+</DialogPane>
