@@ -4,10 +4,8 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -22,11 +20,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
 
-class GameScene {
+class GameScene extends Movement{
     private static int HEIGHT = 700;
     private static int n = 4;
-    private final static int distanceBetweenCells = 10;
-    private static double LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
+    public final static int distanceBetweenCells = 10;
+    public static double LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
     private TextMaker textMaker = TextMaker.getSingleInstance();
     private Cell[][] cells = new Cell[n][n];
     private Group root;
@@ -168,98 +166,50 @@ class GameScene {
     }
 
     private void moveLeft() {
-        if(Objects.equals(GameModeChoiceString, "Drunk")){
-            for (int i = 0; i < n; i++) {
-                for (int j = n - 1; j >= 0; j--) {
-                    moveHorizontally(i, j, passDestination(i, j, 'r'), 1);
-                }
-                for (int j = 0; j < n; j++) {
-                    cells[i][j].setModify(false);
-                }
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j < n; j++) {
+                moveHorizontally(i, j, passDestination(i, j, 'l'), -1);
             }
-        } //move right
-        else{
-            for (int i = 0; i < n; i++) {
-                for (int j = 1; j < n; j++) {
-                    moveHorizontally(i, j, passDestination(i, j, 'l'), -1);
-                }
-                for (int j = 0; j < n; j++) {
-                    cells[i][j].setModify(false);
-                }
+            for (int j = 0; j < n; j++) {
+                cells[i][j].setModify(false);
             }
-        } // move left
+        }
         playMoveMusic();
     }
 
     private void moveRight() {
-        if(Objects.equals(GameModeChoiceString, "Drunk")){
-            for (int i = 0; i < n; i++) {
-                for (int j = 1; j < n; j++) {
-                    moveHorizontally(i, j, passDestination(i, j, 'l'), -1);
-                }
-                for (int j = 0; j < n; j++) {
-                    cells[i][j].setModify(false);
-                }
+        for (int i = 0; i < n; i++) {
+            for (int j = n - 1; j >= 0; j--) {
+                moveHorizontally(i, j, passDestination(i, j, 'r'), 1);
             }
-        }// move left
-        else{
-            for (int i = 0; i < n; i++) {
-                for (int j = n - 1; j >= 0; j--) {
-                    moveHorizontally(i, j, passDestination(i, j, 'r'), 1);
-                }
-                for (int j = 0; j < n; j++) {
-                    cells[i][j].setModify(false);
-                }
+            for (int j = 0; j < n; j++) {
+                cells[i][j].setModify(false);
             }
-        } // move right
+        }
         playMoveMusic();
     }
 
     private void moveUp() {
-        if(Objects.equals(GameModeChoiceString, "Drunk")){
-            for (int j = 0; j < n; j++) {
-                for (int i = n - 1; i >= 0; i--) {
-                    moveVertically(i, j, passDestination(i, j, 'd'), 1);
-                }
-                for (int i = 0; i < n; i++) {
-                    cells[i][j].setModify(false);
-                }
+        for (int j = 0; j < n; j++) {
+            for (int i = 1; i < n; i++) {
+                moveVertically(i, j, passDestination(i, j, 'u'), -1);
             }
-        } //move down
-        else{
-            for (int j = 0; j < n; j++) {
-                for (int i = 1; i < n; i++) {
-                    moveVertically(i, j, passDestination(i, j, 'u'), -1);
-                }
-                for (int i = 0; i < n; i++) {
-                    cells[i][j].setModify(false);
-                }
+            for (int i = 0; i < n; i++) {
+                cells[i][j].setModify(false);
             }
-        } //move up
+        }
         playMoveMusic();
     }
 
     private void moveDown() {
-        if(Objects.equals(GameModeChoiceString, "Drunk")){
-            for (int j = 0; j < n; j++) {
-                for (int i = 1; i < n; i++) {
-                    moveVertically(i, j, passDestination(i, j, 'u'), -1);
-                }
-                for (int i = 0; i < n; i++) {
-                    cells[i][j].setModify(false);
-                }
+        for (int j = 0; j < n; j++) {
+            for (int i = n - 1; i >= 0; i--) {
+                moveVertically(i, j, passDestination(i, j, 'd'), 1);
             }
-        } //if game mode is "drunk", move down will become move up
-        else{
-            for (int j = 0; j < n; j++) {
-                for (int i = n - 1; i >= 0; i--) {
-                    moveVertically(i, j, passDestination(i, j, 'd'), 1);
-                }
-                for (int i = 0; i < n; i++) {
-                    cells[i][j].setModify(false);
-                }
+            for (int i = 0; i < n; i++) {
+                cells[i][j].setModify(false);
             }
-        }// if game mode is "normal" or "mult", move down still move down
+        }
         playMoveMusic();
     }
 
@@ -383,24 +333,46 @@ class GameScene {
         gameScene.addEventHandler(KeyEvent.KEY_PRESSED, key ->{
                 Platform.runLater(() -> {
                     int haveEmptyCell;
-                    switch(key.getCode()){
-                        case UP -> GameScene.this.moveUp();
-                        case DOWN -> GameScene.this.moveDown();
-                        case LEFT -> GameScene.this.moveLeft();
-                        case RIGHT -> GameScene.this.moveRight();
-                        default -> {
-                            Alert Error = new Alert(Alert.AlertType.ERROR);
-                            Error.setTitle("Error");
-                            Error.setHeaderText("You can only input arrow key: Left, right, up and down");
+                    if(Objects.equals(GameModeChoiceString, "Drunk")){
+                        switch(key.getCode()){
+                            case UP -> GameScene.this.moveDown();
+                            case DOWN -> GameScene.this.moveUp();
+                            case LEFT -> GameScene.this.moveRight();
+                            case RIGHT -> GameScene.this.moveLeft();
+                            default -> {
+                                Alert Error = new Alert(Alert.AlertType.ERROR);
+                                Error.setTitle("Error");
+                                Error.setHeaderText("You can only input arrow key: Left, right, up and down");
 
-                            PauseTransition delay = new PauseTransition(Duration.seconds(3));
-                            delay.setOnFinished(e -> Error.hide());
-                            Error.show();
-                            delay.play();
+                                PauseTransition delay = new PauseTransition(Duration.seconds(3));
+                                delay.setOnFinished(e -> Error.hide());
+                                Error.show();
+                                delay.play();
 
-                            return;
-                        }
-                    }
+                                return;
+                            }
+                        } //end of switch
+                    }//end of if, this code only run when game mode is "drunk", meaning the control are reverse
+                    else{
+                        switch(key.getCode()){
+                            case UP -> GameScene.this.moveUp();
+                            case DOWN -> GameScene.this.moveDown();
+                            case LEFT -> GameScene.this.moveLeft();
+                            case RIGHT -> GameScene.this.moveRight();
+                            default -> {
+                                Alert Error = new Alert(Alert.AlertType.ERROR);
+                                Error.setTitle("Error");
+                                Error.setHeaderText("You can only input arrow key: Left, right, up and down");
+
+                                PauseTransition delay = new PauseTransition(Duration.seconds(3));
+                                delay.setOnFinished(e -> Error.hide());
+                                Error.show();
+                                delay.play();
+
+                                return;
+                            }
+                        } //end of switch
+                    }//end of else, this code only when game mode is not "Drunk"
 
                     scoreText.setText(score + "");
 
@@ -474,29 +446,7 @@ class GameScene {
                         }
                     }
 
-//                    if(!test){
-//
-//                    }
-//                    for(int i=0; i<n; i++){
-//                        for(int j=0; j<n; j++){
-//                            if(cells[i][j].getNumber() == 2048){
-//                                AccountList accListObj = new AccountList();
-//                                accListObj.writeFile(controllerObj.getUsername(), (int)score);
-//                                Parent WinRoot = null;
-//                                try {
-//                                    WinRoot = FXMLLoader.load(getClass().getResource("EndgameWin.fxml"));
-//                                } catch (IOException e) {
-//                                    throw new RuntimeException(e);
-//                                }
-//                                Scene WinScene = new Scene(WinRoot);
-//                                Stage winStage = new Stage();
-//                                //winStage.setScene(WinScene);
-//                                //winStage.show();
-//                                //primaryStage.setScene(WinScene);
-//                                //primaryStage.show();
-//                            }
-//                        }
-//                    }
+
                     if (haveEmptyCell == -1) {
                         if (GameScene.this.canNotMove()) {
                             if(Objects.equals(GameModeChoiceString, "TwoThree")){

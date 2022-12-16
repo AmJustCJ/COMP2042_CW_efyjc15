@@ -165,8 +165,6 @@ public class Controller extends Main implements Initializable{
         mediaPlayer.stop();
     }
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(modeChoiceBox != null){
@@ -178,9 +176,6 @@ public class Controller extends Main implements Initializable{
         Image temp1 = selectBgObj.getBgImg();
         if (temp1 != null){
             BackgroundImage.setImage(temp1);
-            System.out.println("Not null" + temp1);
-            System.out.println("null" + temp1);
         }
-
     }
 }

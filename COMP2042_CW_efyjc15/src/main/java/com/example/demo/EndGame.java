@@ -43,7 +43,7 @@ public class EndGame {
     }
 
     public void endGameShow(Scene endGameScene, Group root, Stage primaryStage,long score){
-        Text text = new Text("GAME OVER");
+        Text text = new Text("GAME OVER :(");
         text.relocate(250,250);
         text.setFont(Font.font(80));
         root.getChildren().add(text);
@@ -109,10 +109,6 @@ public class EndGame {
                     mainStage.setScene(StartScene);
                     mainStage.show();
                 }
-//                Parent StartRoot = FXMLLoader.load(getClass().getResource("mainPage.fxml"));
-//                Scene StartScene = new Scene(StartRoot);
-//                primaryStage.setScene(StartScene);
-//                primaryStage.show();
             }
         });
 
