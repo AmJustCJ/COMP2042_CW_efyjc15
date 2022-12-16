@@ -2,11 +2,14 @@
 <li>Name: Chang Jiun Wen</li>
 <li>Student IDL 20307145</li>
 <br>
+Extra note, I will upload the video demo on Youtube: https://youtu.be/hoFaEtUrAaI
+<br><br>
 <li>How to compile the code to produce the application?</li>
--Download ZIP folder from GitHub, Open in Intellij
+-Download ZIP folder from GitHub, unzip and open in Intellij. Or unzip ChangJiunWen_Intellij_19.zip, open COMP2042_CW_efyjc15-main in Intellij with Open Project
 <br><br>
 <li>Where Javadoc documentation is stored</li>
--Homework folder
+-in javadoc folder within COMP2024ChangJiunWen
+-edit: the full javadoc is uploaded on github, not on the zip file submitted, sorry sir
 <br><br>
 <li>List of features implemented and are working properly</li>
 <ul>
