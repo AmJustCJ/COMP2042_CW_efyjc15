@@ -80,7 +80,7 @@ public class Movement {
         xCell = random.nextInt(aForBound+1);
         yCell = random.nextInt(bForBound+1);
         if (putTwo) {
-            text = textMaker.madeText("2", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
+            text = textMaker.madeText("1024", emptyCells[xCell][yCell].getX(), emptyCells[xCell][yCell].getY(), root);
             emptyCells[xCell][yCell].setTextClass(text);
             root.getChildren().add(text);
             emptyCells[xCell][yCell].setColorByNumber(2);
@@ -355,6 +355,7 @@ public class Movement {
         Media mediaMove = new Media(Paths.get(MoveSong).toUri().toString());
         MediaPlayer mediaPlayerMove = new MediaPlayer(mediaMove);
         mediaPlayerMove.play();
+        mediaPlayerMove.setVolume(0.3);
     }
 
     /**
@@ -365,5 +366,6 @@ public class Movement {
         Media mediaAdd = new Media(Paths.get(AddSong).toUri().toString());
         MediaPlayer mediaPlayerAdd = new MediaPlayer(mediaAdd);
         mediaPlayerAdd.play();
+        mediaPlayerAdd.setVolume(0.3);
     }
 }

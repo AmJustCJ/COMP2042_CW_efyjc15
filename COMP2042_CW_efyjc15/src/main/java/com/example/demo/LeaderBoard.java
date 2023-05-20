@@ -61,6 +61,7 @@ public class LeaderBoard implements Initializable {
         ScoreChoiceBox.getItems().addAll(gameModeChoice);
         ScoreChoiceBox.setOnAction(this::gameMode);
         mediaPlayer.play();
+        mediaPlayer.setVolume(0.3);
     }
 
     /**

@@ -65,7 +65,6 @@ public class Controller extends Main implements Initializable{
     Media media = new Media(Paths.get(song).toUri().toString());
     public MediaPlayer mediaPlayer = new MediaPlayer(media);
 
-
     static final int WIDTH = 900;
     static final int HEIGHT = 800;
     private Group gameRoot = new Group();

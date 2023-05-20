@@ -45,6 +45,7 @@ public class EndGame {
         Media media = new Media(Paths.get(loseSong).toUri().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
+        mediaPlayer.setVolume(0.3);
     }
 
     /**
